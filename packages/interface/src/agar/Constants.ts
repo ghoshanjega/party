@@ -18,6 +18,7 @@ export const C = {
 
   MAP_SIZE: 3000,
   MSG_TYPES: {
+    JOIN_ROOM: "join_room",
     JOIN_GAME: 'join_game',
     JOINED_GAME: 'joined_game',
     GAME_UPDATE: 'update',

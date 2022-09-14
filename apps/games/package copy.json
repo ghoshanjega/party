@@ -1,5 +1,5 @@
 {
-  "name": "games",
+  "name": "agar",
   "version": "0.0.0",
   "authors": [
     "Ghoshan Jaganathamani"
@@ -18,15 +18,14 @@
     "@react-three/postprocessing": "^2.6.2",
     "@types/three": "^0.143.0",
     "babel-plugin-glsl": "^1.0.0",
-    "bootstrap": "^5.2.1",
     "glsl-random": "^0.0.5",
     "interface": "*",
     "leva": "^0.9.30",
     "logger": "*",
-    "next": "12.2.3",
+    "next": "^12.2.3",
     "next-pwa": "^5.5.4",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "socket.io-client": "^4.5.1",
     "three": "^0.142.0",
     "three-stdlib": "^2.12.1",
@@ -34,9 +33,9 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.2.3",
-    "@types/react": "^18",
+    "@types/node": "^18.7.2",
+    "@types/react": "^18.0.17",
     "autoprefixer": "^10.4.2",
-    "bun-framework-next": "^12",
     "eslint-config-custom": "*",
     "file-loader": "^6.2.0",
     "glslify": "^7.1.1",
@@ -45,9 +44,8 @@
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
     "raw-loader": "^4.0.2",
-    "react-refresh": "0.10.0",
     "tailwindcss": "^3.1.6",
-    "typescript": "latest",
+    "typescript": "^4.7.4",
     "url-loader": "^4.1.1"
   },
   "scripts": {

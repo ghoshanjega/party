@@ -1,39 +1,73 @@
-import dynamic from 'next/dynamic'
-// Step 5 - delete Instructions components
-import Instructions from '@/components/dom/Instructions'
-// import Shader from '@/components/canvas/Shader/Shader'
+import { TopBar } from '@/components/layout/TopBar'
+import { useStore } from '@/helpers/store'
+import { useGetRooms } from '@/helpers/useGetRooms'
+import { C } from 'interface'
+import React, { useState } from 'react'
 
-// Dynamic import is used to prevent a payload when the website start that will include threejs r3f etc..
-// WARNING ! errors might get obfuscated by using dynamic import.
-// If something goes wrong go back to a static import to show the error.
-// https://github.com/pmndrs/react-three-next/issues/49
-const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
-  ssr: false,
-})
 
-// dom components goes here
-const Page = (props) => {
+const Navbar = () => {
+  const { socket } = useStore()
   return (
-    <>
-      <Instructions />
-    </>
+    <div className="row">
+      <div className='column'>
+        Party games
+      </div>
+    </div>
   )
 }
 
-// canvas components goes here
-// It will receive same props as Page component (from getStaticProps, etc.)
-Page.r3f = (props) => (
-  <>
-    <Shader />
-  </>
-)
-
-export default Page
-
-export async function getStaticProps() {
-  return {
-    props: {
-      title: 'Index',
-    },
+const RoomSelector = () => {
+  const rooms = useGetRooms()
+  if (rooms) {
+    return (
+      <div className='w-100'>
+        {Object.entries(rooms).map(([key, room]) => (
+          <div id={key} className="w-100 p-3 d-flex justify-content-between">
+            <div>
+              {room.name}
+            </div>
+            <div>
+              <button>join</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    )
   }
+  return <></>
 }
+
+const CreateRoom = () => {
+  const [name, setName] = useState("")
+  const { socket } = useStore();
+
+  const handleCreate = () => {
+    socket.emit(C.MSG_TYPES.JOIN_ROOM, name)
+  }
+
+  return (
+    <div className='p-5'>
+      <div className="mb-3">
+        <label htmlFor="name" className="form-label">Room name</label>
+        <input type="text" className="form-control" id="name" aria-describedby="Room name" onChange={(e) => setName(e.target.value)} />
+      </div>
+      <button onClick={handleCreate} disabled={name === ""} className="btn btn-primary">Create room</button>
+    </div>
+
+  )
+}
+
+function Index() {
+  return (
+    <React.Fragment>
+      <TopBar>
+
+      </TopBar>
+      <RoomSelector />
+      <CreateRoom />
+
+    </React.Fragment>
+  )
+}
+
+export default Index

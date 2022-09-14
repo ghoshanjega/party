@@ -3,17 +3,19 @@ import { MutableRefObject } from 'react'
 import create from 'zustand'
 import shallow from 'zustand/shallow'
 import io from 'socket.io-client';
-import { Game, Player } from 'interface';
+import { GameEngine, Player } from 'interface';
 
-const socket = io(`ws://localhost:3001`, {
-  path: "/socket.io"
-});
+// const socket = io(`ws://localhost:3001`, {
+//   path: "/socket.io"
+// });
+
+const socket = io('ws://localhost:8080');
 
 export interface StoreState {
   router: NextRouter
   dom: MutableRefObject<any>
   socket: typeof socket;
-  game: Game;
+  game: GameEngine;
   joined: boolean;
 }
 

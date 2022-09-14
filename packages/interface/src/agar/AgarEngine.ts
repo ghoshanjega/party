@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { GameEngine, GamePlayer } from '../common';
 
 import { Agar, Agars } from "./Agar";
 import { C } from "./Constants";
@@ -6,22 +7,23 @@ import { Player, Players } from "./Player";
 import { Socket, Sockets } from "./Socket";
 import { randomPosInMap, randomSize } from './utils';
 
+export const famr = 1
 
-
-export class Game {
+export class AgarEngine extends GameEngine {
   sockets: Sockets;
   players: Players;
   agars: Agars;
   lastUpdateTime: number;
   shouldSendUpdate: boolean;
 
-  constructor(io: any) {
+  constructor() {
+    super()
     this.sockets = {};
     this.players = {};
     this.agars = new Map();
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
-    setInterval(this.update.bind(this, io), 1000 / 60);
+    setInterval(this.update.bind(this), 1000 / 60);
     this.initialize()
   }
 
@@ -36,21 +38,21 @@ export class Game {
     this.agars = agarMap;
   }
 
-  update(io: any) {
+  update() {
     const now = Date.now();
     const dt = (now - this.lastUpdateTime) / 1000;
     this.lastUpdateTime = now;
     for (const playerId in this.players) {
       const player = this.players[playerId]
-      this.players[playerId].update(dt, player.direction)
+      this.players[playerId].update(dt, player.body.direction)
     }
     for (const [agarId, agar] of this.agars) {
       for (const playerId in this.players) {
         const player = this.players[playerId]
 
-        if (agar && player.isWithinRadius(agar.x, agar.y)) {
+        if (agar && player.body.isWithinRadius(agar.x, agar.y)) {
           // delete this agar
-          player.size += agar.size
+          player.body.size += agar.size
           this.agars.delete(agarId)
           // create a replacement
           const id = uuidv4()
@@ -63,10 +65,10 @@ export class Game {
         }
       }
     }
-    io.emit(C.MSG_TYPES.GAME_STATE, this.serialize())
+    // io.emit(C.MSG_TYPES.GAME_STATE, this.serialize())gfhedfgdhbjfyfjgyhjhfjghf
   }
 
-  addPlayer(socket: Socket, username: string) {
+  addPlayer(socket: Socket, player: GamePlayer) {
     // console.log("soso", socket, username)
     this.sockets[socket.id] = socket;
 
@@ -74,7 +76,7 @@ export class Game {
     // Generate a position to start this player at.
     const x = C.MAP_SIZE * (0.25 + Math.random() * 0.5);
     const y = C.MAP_SIZE * (0.25 + Math.random() * 0.5);
-    this.players[socket.id] = new Player(socket.id, username, x, y);
+    this.players[socket.id] = new Player(player, socket.id, x, y);
   }
 
   removePlayer(socket: Socket) {
@@ -84,8 +86,8 @@ export class Game {
 
   handleInput(socket: Socket, dir: number, speed: number) {
     if (this.players[socket.id]) {
-      this.players[socket.id].setDirection(dir);
-      this.players[socket.id].setSpeed(speed);
+      this.players[socket.id].body.setDirection(dir);
+      this.players[socket.id].body.setSpeed(speed);
     }
   }
 

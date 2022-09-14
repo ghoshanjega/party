@@ -9,6 +9,9 @@ import { AppProps } from 'next/app'
 import { C } from 'interface'
 
 
+import 'bootstrap/dist/css/bootstrap.css'
+
+
 
 const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
   loading: () => <>loading</>,
