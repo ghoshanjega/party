@@ -2,21 +2,21 @@ import { NextRouter } from 'next/router'
 import { MutableRefObject } from 'react'
 import create from 'zustand'
 import shallow from 'zustand/shallow'
-import io from 'socket.io-client';
-import { GameEngine, Player } from 'interface';
+import io from 'socket.io-client'
+import { GameEngine, GameRoomDto } from 'interface'
 
 // const socket = io(`ws://localhost:3001`, {
 //   path: "/socket.io"
 // });
 
-const socket = io('ws://localhost:8080');
+const socket = io('ws://localhost:8080')
 
 export interface StoreState {
   router: NextRouter
   dom: MutableRefObject<any>
-  socket: typeof socket;
-  game: GameEngine;
-  joined: boolean;
+  socket: typeof socket
+  room: GameRoomDto<any>
+  joined: boolean
 }
 
 // const useStoreImpl = create<StoreState>(() => {
@@ -45,6 +45,6 @@ export const useStore = create<StoreState>((set, shallow) => ({
   //   score: 0
   // },
   // @ts-ignore
-  game: null,
-  joined: false
+  room: null,
+  joined: false,
 }))

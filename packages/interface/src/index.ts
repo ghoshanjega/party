@@ -1,2 +1,2 @@
-export * from './agar'
+export * as Agar from './agar' 
 export * from './common'

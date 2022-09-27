@@ -1,35 +1,31 @@
-import { C, Game } from "interface";
-import { Dispatch, MutableRefObject, SetStateAction } from "react";
-import { Socket } from "socket.io-client";
-import { useStore } from "./store";
+import { GameEngine, Events, GameRoomDto, GameEngineDto } from 'interface'
+import { NextRouter } from 'next/router'
+import { Socket } from 'socket.io-client'
+import { StoreState, useStore } from './store'
 
-
-export const play = (socket: any, username: string) => {
-  socket.emit(C.MSG_TYPES.JOIN_GAME, username);
-};
-
-export const updateDirection = (socket: any, dir: number) => {
-  socket.emit(C.MSG_TYPES.INPUT, dir);
-};
-
-export const joinGame = (socket: any, username: string = "default") => {
-  console.log("emitting join game")
-  socket.emit(C.MSG_TYPES.JOIN_GAME, username)
-}
-
-export const setupListners = (socket: Socket, setState: typeof useStore.setState) => {
-  socket.on(C.MSG_TYPES.GAME_STATE, (state: Game) => {
-    if (setState) {
-      setState({ game: state })
-    }
-  })
-  socket.on(C.MSG_TYPES.JOINED_GAME, () => {
-    if (setState) {
-      setState({ joined: true })
-    }
+export const emit = (
+  store: StoreState,
+  event: string,
+  data: { [key: string]: any }
+) => {
+  store.socket.emit(event, {
+    room: store.room,
+    ...data,
   })
 }
 
-export const emitControl = (socket: Socket, direction: number, speed: number) => {
-  socket.emit(C.MSG_TYPES.INPUT, direction, speed)
+export const setupListners = (
+  store: StoreState,
+  setState: typeof useStore.setState,
+  router: NextRouter
+) => {
+  store.socket.on(Events.GAME_STATE, (state: GameRoomDto<any>) => {
+    setState({ room: state })
+  })
+  store.socket.on(Events.JOINED_ROOM, (room: GameRoomDto<any>) => {
+    setState({ room: room })
+    if (room.engine.location !== GameEngine.identifier) {
+      router.push(room.engine.location)
+    }
+  })
 }

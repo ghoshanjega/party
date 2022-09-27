@@ -1,6 +1,6 @@
 import { useStore } from '@/helpers/store'
 import { useFrame } from '@react-three/fiber'
-import { Agar, Agars } from 'interface'
+import { Agar} from 'interface'
 import { AppProps } from 'next/app'
 import React, { createRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSprings, a } from '@react-spring/three'
@@ -9,7 +9,7 @@ import { Instance, RoundedBox } from '@react-three/drei'
 import { BufferGeometry, Material, Mesh } from 'three'
 import { useSphere } from '@react-three/cannon'
 
-const Agar3D = ({ agar }: { agar: Agar }): JSX.Element => {
+const Agar3D = ({ agar }: { agar: Agar.Agar }): JSX.Element => {
   // const mesh = createRef<THREE.Mesh>()
   // const [hovered, setHover] = useState(false)
   // const [active, setActive] = useState(false)

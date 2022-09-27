@@ -3,6 +3,16 @@ import { Obj } from './Obj'
 
 export type Agars = Map<string, Agar>
 
+export interface AgarDto  {
+  color: string;
+  direction: number;
+  id: string;
+  size: number;
+  speed: number;
+  x: number;
+  y: number;
+}
+
 export class Agar extends Obj {
   constructor(id: string, x: number, y: number, dir: number, speed: number, size: number) {
     super(id, x, y, dir, speed, size, '#ff1234');
@@ -17,7 +27,7 @@ export class Agar extends Obj {
     const dx = this.x - object.x;
     const dy = this.y - object.y;
     return Math.sqrt(dx * dx + dy * dy);
-  }
+  } 
 
   serializeForUpdate() {
     return {

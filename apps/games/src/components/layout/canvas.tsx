@@ -36,13 +36,15 @@ const LCanvas = ({ children }: { children: ReactNode }) => {
       // }}
       // linear
       // flat
-      // shadows
       // camera={{ position: [500, 500, 1000], fov: 50, far: 2000 }}
-      shadows dpr={[1, 2]} gl={{ antialias: false }}
-      onCreated={(state) => state.events.connect && state.events.connect(dom.current)}
-
+      shadows
+      dpr={[1, 2]}
+      gl={{ antialias: false }}
+      onCreated={(state) =>
+        state.events.connect && state.events.connect(dom.current)
+      }
     >
-      <OrthographicCamera makeDefault zoom={1} position={[500, 500, 100]} far={2000} />
+      {/* <OrthographicCamera makeDefault zoom={1} position={[500, 500, 100]} far={2000} /> */}
       {/* <LControl /> */}
       <Preload all />
       {children}

@@ -1,52 +1,65 @@
 import fastify from 'fastify'
 import cors from '@fastify/cors'
 import socketioServer from 'fastify-socket.io'
-import { GameRoomDto, GameRoom, C, AgarEngine } from 'interface'
-import { Socket } from 'socket.io'
 
-const app = fastify({ logger: true })
+import { GameRoom, Agar, Events, GamePlayer, RoomsDto } from 'interface'
+import { Socket } from 'socket.io'
+import { generateName } from './utils/player'
+
+const app = fastify({ logger: false })
 await app.register(cors, {
-  origin: "*"
+  origin: '*',
 })
 app.register(socketioServer, {
   cors: {
-    origin: "*"
-  }
+    origin: '*',
+  },
+  logLevel: 'debug',
 })
 
-const gameRooms: Map<String, GameRoom> = new Map();
+// TODO: Persist these
+const gameRooms: Map<String, GameRoom<any>> = new Map()
+const gamePlayers: Map<String, GamePlayer> = new Map()
 
-
+// API
 app.get('/ping', async (request, reply) => {
   return 'pong\n'
 })
 
 app.get('/rooms', async (request, reply) => {
-  reply.send({
-    "rooms": Object.fromEntries(gameRooms)
-  })
+  const rooms: RoomsDto<any> = {
+    rooms: Object.fromEntries(new Map(Array.from(gameRooms).map(([key, value]) => [key, { name: value.name, engine: value.engine.serialize() }]))),
+  }
+  reply.send(rooms)
 })
 
-
-
-app.ready(err => {
+// SOCKET
+app.ready((err) => {
   if (err) throw err
-
   app.io.on('connection', (socket: Socket) => {
-    socket.on(C.MSG_TYPES.JOIN_ROOM, (roomId: string) => {
-      if (gameRooms.has(roomId)) {
-        socket.join(roomId)
-      }
-      else {
+    socket.on(Events.JOIN_ROOM, (data: { roomId: string }) => {
+      if (gameRooms.has(data.roomId)) {
+        socket.join(data.roomId)
+      } else {
         // TODO: Multiple game engines
-        const engine = new AgarEngine();
-        const gameRoom = new GameRoom(engine)
-        gameRooms.set(roomId, gameRoom);
-        socket.join(roomId);
+        const engine = new Agar.Engine()
+        const gameRoom = new GameRoom(engine, data.roomId, app.io)
+        gameRooms.set(gameRoom.name, gameRoom)
+        if (!gamePlayers.has(socket.id)) {
+          const { x, y } = Agar.randomPosInMap()
+          const player = new Agar.Player(generateName(), socket, x, y)
+          engine.addPlayer(socket, player)
+          gamePlayers.set(socket.id, player)
+        }
+        socket.join(data.roomId)
+        socket.emit(Events.JOINED_ROOM, gameRoom.serialize())
       }
     })
-    socket.on("*", (event, data) => {
-      console.log("scoket.rooms", socket.rooms)
+    socket.on(Events.INPUT, (data) => {
+      const room = gameRooms.get(data.room.name)
+      if (room) {
+        room.engine.handleInput(socket, data)
+      }
     })
   })
 })

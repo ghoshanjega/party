@@ -3,61 +3,59 @@ import { useStore } from '@/helpers/store'
 import { useEffect, useState } from 'react'
 import Header from '@/config'
 import Dom from '@/components/layout/dom'
-import '@/styles/index.css'
 import dynamic from 'next/dynamic'
 import { AppProps } from 'next/app'
-import { C } from 'interface'
+import { setupListners } from '@/helpers/socket'
+import { Theme } from 'react-daisyui'
 
-
+import '@/styles/index.css'
 import 'bootstrap/dist/css/bootstrap.css'
-
-
 
 const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
   loading: () => <>loading</>,
   ssr: true,
 })
 
-
 function App({ Component, pageProps = { title: 'index' } }: AppProps) {
-  const { socket } = useStore()
+  const store = useStore()
 
-  const [isConnected, setIsConnected] = useState(socket.connected);
-  const [lastPong, setLastPong] = useState<string | null>(null);
+  const [isConnected, setIsConnected] = useState(store.socket.connected)
+  const [lastPong, setLastPong] = useState<string | null>(null)
 
   const router = useRouter()
 
   useEffect(() => {
-    socket.on('connect', () => {
-      setIsConnected(true);
-    });
+    if (!store.room) {
+      router.push('/')
+    }
+  }, [store.room])
 
-    socket.on('disconnect', () => {
-      setIsConnected(false);
-    });
+  useEffect(() => {
+    store.socket.on('connect', () => {
+      setIsConnected(true)
+    })
 
-    socket.on('pong', () => {
-      setLastPong(new Date().toISOString());
-    });
-    sendPing()
+    store.socket.on('disconnect', () => {
+      router.push('/')
+    })
+
+    store.socket.on('pong', () => {
+      setLastPong(new Date().toISOString())
+    })
+
+    setupListners(store, useStore.setState, router)
     // setupListners(socket, (game) => useStore.setState({ game }))
 
     return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('pong');
-    };
-  }, []);
-
-  const sendPing = () => {
-    socket.emit('ping');
-  }
+      store.socket.off('connect')
+      store.socket.off('disconnect')
+      store.socket.off('pong')
+    }
+  }, [store.socket])
 
   useEffect(() => {
     useStore.setState({ router })
   }, [router])
-
-
 
   return (
     <>
@@ -65,7 +63,7 @@ function App({ Component, pageProps = { title: 'index' } }: AppProps) {
       <Dom>
         <Component {...pageProps} />
       </Dom>
-      {Component?.r3f && <LCanvas>{Component.r3f(pageProps)}</LCanvas>}
+      {store.room && Component?.r3f && <LCanvas>{Component.r3f()}</LCanvas>}
     </>
   )
 }
