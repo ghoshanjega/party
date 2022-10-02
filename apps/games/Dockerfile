@@ -19,7 +19,7 @@ RUN yarn install
 
 # Build the project
 COPY --from=builder /app/out/full/ .
-COPY turbo.json turbo.json
+COPY --from=builder  turbo.json turbo.json
 RUN yarn turbo run build --filter=games...
 
 

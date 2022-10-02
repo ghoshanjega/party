@@ -30,6 +30,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # - name: Compose
+      #   run: DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build --parallel
+
+      # - name: Publish
+      #   run:
+
       - name: Build Games image and push to Docker Hub
         uses: docker/build-push-action@v2
         with:

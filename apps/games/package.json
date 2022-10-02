@@ -59,5 +59,6 @@
     "export": "EXPORT=true next build && EXPORT=true next export",
     "analyze": "ANALYZE=true next build",
     "start": "next start"
-  }
+  },
+  "packageManager": "yarn@1.22.17"
 }
