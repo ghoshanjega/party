@@ -82,12 +82,17 @@ module.exports = (_phase, { defaultConfig }) => {
     }
   )
 
-  const finalConfig = {}
+  const finalConfig = {
+
+  }
   Object.keys(wConfig).forEach((key) => {
     if (!KEYS_TO_OMIT.includes(key)) {
       finalConfig[key] = wConfig[key]
     }
   })
 
-  return finalConfig
+  return {
+    ...finalConfig,
+    // output: 'standalone', 
+  }
 }

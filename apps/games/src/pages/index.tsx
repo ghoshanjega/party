@@ -4,7 +4,6 @@ import { useStore } from '@/helpers/store'
 import { useGetRooms } from '@/helpers/useGetRooms'
 import { Events, GameRoomDto } from 'interface'
 import React, { useState } from 'react'
-import { Button, Carousel, Hero } from 'react-daisyui'
 
 const Navbar = () => {
   const { socket } = useStore()

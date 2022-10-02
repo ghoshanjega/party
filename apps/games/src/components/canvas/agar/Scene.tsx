@@ -61,7 +61,7 @@ export const Scene = ({}) => {
         agarCount: Object.keys((store.room.engine as Agar.Engine).agars).length,
       })
     }
-  }, [player])
+  }, [player, set, store.room.engine])
 
   // console.log('player', player.body)
 

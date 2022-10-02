@@ -3,7 +3,7 @@ module.exports = {
   rules: {
     "@next/next/no-html-link-for-pages": "off",
     "react/jsx-key": "off",
-    semi: [2, "always"],
-    code: 80
+    // semi: [2, "always"],
+    "max-len": ["warn", { "code": 80 }]
   },
 };

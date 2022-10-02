@@ -6,7 +6,6 @@ import Dom from '@/components/layout/dom'
 import dynamic from 'next/dynamic'
 import { AppProps } from 'next/app'
 import { setupListners } from '@/helpers/socket'
-import { Theme } from 'react-daisyui'
 
 import '@/styles/index.css'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -16,7 +15,10 @@ const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
   ssr: true,
 })
 
-function App({ Component, pageProps = { title: 'index' } }: AppProps) {
+function App({
+  Component,
+  pageProps = { title: 'index' },
+}: AppProps<{ title: string }>) {
   const store = useStore()
 
   const [isConnected, setIsConnected] = useState(store.socket.connected)
@@ -28,7 +30,7 @@ function App({ Component, pageProps = { title: 'index' } }: AppProps) {
     if (!store.room) {
       router.push('/')
     }
-  }, [store.room])
+  }, [store.room, router])
 
   useEffect(() => {
     store.socket.on('connect', () => {
@@ -51,7 +53,7 @@ function App({ Component, pageProps = { title: 'index' } }: AppProps) {
       store.socket.off('disconnect')
       store.socket.off('pong')
     }
-  }, [store.socket])
+  }, [router, store, store.socket])
 
   useEffect(() => {
     useStore.setState({ router })
@@ -63,7 +65,9 @@ function App({ Component, pageProps = { title: 'index' } }: AppProps) {
       <Dom>
         <Component {...pageProps} />
       </Dom>
-      {store.room && Component?.r3f && <LCanvas>{Component.r3f()}</LCanvas>}
+      {store.room && (Component as any)?.r3f && (
+        <LCanvas>{(Component as any).r3f()}</LCanvas>
+      )}
     </>
   )
 }

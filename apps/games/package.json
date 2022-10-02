@@ -23,7 +23,7 @@
     "interface": "*",
     "leva": "^0.9.30",
     "logger": "*",
-    "next": "12.2.3",
+    "next": "^12.2.5",
     "next-pwa": "^5.5.4",
     "react": "^18",
     "react-dom": "^18",

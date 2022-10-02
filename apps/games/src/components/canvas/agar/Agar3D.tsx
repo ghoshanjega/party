@@ -1,8 +1,15 @@
 import { useStore } from '@/helpers/store'
 import { useFrame } from '@react-three/fiber'
-import { Agar} from 'interface'
+import { Agar } from 'interface'
 import { AppProps } from 'next/app'
-import React, { createRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, {
+  createRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { useSprings, a } from '@react-spring/three'
 import * as THREE from 'three'
 import { Instance, RoundedBox } from '@react-three/drei'
@@ -31,13 +38,13 @@ const Agar3D = ({ agar }: { agar: Agar.Agar }): JSX.Element => {
   useFrame((state) => {
     // const t = factor + state.clock.elapsedTime * (speed / 2)
     if (ref.current) {
+      // @ts-ignore
       ref.current.scale.setScalar(agar.size)
+      // @ts-ignore
       ref.current.position.set(agar.x, agar.y, 0)
     }
-
   })
   return <Instance ref={ref} />
-
 }
 
 export default Agar3D

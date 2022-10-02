@@ -10,6 +10,7 @@ const Agars3D = ({ agars }: { agars: Agar.Agars }) => {
     return (
       <Instances
         limit={agarsArray.length}
+        // @ts-ignore
         ref={ref}
         castShadow
         receiveShadow

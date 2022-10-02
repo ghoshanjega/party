@@ -1,6 +1,11 @@
-# Turborepo starter with npm
+# Party games
 
-This is an official starter turborepo.
+## Explorations
+
+- [] Monorepo with turborepo
+- [] Three JS
+- [] Node JS based server
+- [] Docker deployment
 
 ## What's inside?
 
@@ -8,25 +13,13 @@ This turborepo uses [npm](https://www.npmjs.com/) as a package manager. It inclu
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org) app
-- `web`: another [Next.js](https://nextjs.org) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
+- `api`: a [Fastify](https://www.fastify.io/) server with [Socket.IO](https://socket.io/)
+- `games`: a [Next.js](https://nextjs.org) app
+- `interface`: utility interface shared by `games` and `api` applications
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-## Setup
-
-This repository is used in the `npx create-turbo@latest` command, and selected when choosing which package manager you wish to use with your monorepo (npm).
 
 ### Build
 
@@ -63,6 +56,32 @@ Next, you can link your Turborepo to your Remote Cache by running the following 
 
 ```
 npx turbo link
+```
+
+### Docker
+
+This repo is configured to be built with Docker, and Docker compose. To build all apps in this repo:
+
+```
+# Create a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+docker network create app_network
+
+# Build prod using new BuildKit engine
+DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build
+
+# Start prod in detached mode
+docker-compose -f docker-compose.yml up -d
+```
+
+Open http://localhost:3000.
+Open http://localhost:8080.
+
+To shutdown all running containers:
+
+```
+# Stop all running containers
+docker kill $(docker ps -q) && docker rm $(docker ps -a -q)
 ```
 
 ## Useful Links

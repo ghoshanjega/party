@@ -4,7 +4,7 @@ import socketioServer from 'fastify-socket.io'
 
 import { GameRoom, Agar, Events, GamePlayer, RoomsDto } from 'interface'
 import { Socket } from 'socket.io'
-import { generateName } from './utils/player'
+import { generateName } from './utils/player.js'
 
 const app = fastify({ logger: false })
 await app.register(cors, {
@@ -64,7 +64,7 @@ app.ready((err) => {
   })
 })
 
-app.listen({ port: 8080 }, (err, address) => {
+app.listen({ host: '0.0.0.0', port: 8080 }, (err, address) => {
   if (err) {
     console.error(err)
     process.exit(1)

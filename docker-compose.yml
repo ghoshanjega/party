@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  games:
+    container_name: games
+    build:
+      context: .
+      dockerfile: ./apps/games/Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - app_network
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - app_network
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  app_network:
+    external: true

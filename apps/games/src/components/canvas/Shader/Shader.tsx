@@ -23,17 +23,19 @@ ColorShiftMaterial.key = THREE.MathUtils.generateUUID()
 
 extend({ ColorShiftMaterial })
 
-const Shader = (props) => {
+const Shader = (props: any) => {
   const meshRef = useRef(null)
   const [hovered, setHover] = useState(false)
   const router = useStore((state) => state.router)
 
   useFrame((state, delta) => {
     if (meshRef.current) {
-      meshRef.current.rotation.x = meshRef.current.rotation.y += 0.01
+      ;(meshRef.current as any).rotation.x = (
+        meshRef.current as any
+      ).rotation.y += 0.01
     }
-    if (meshRef.current.material) {
-      meshRef.current.material.uniforms.time.value +=
+    if ((meshRef.current as any).material) {
+      ;(meshRef.current as any).material.uniforms.time.value +=
         Math.sin(delta / 2) * Math.cos(delta / 2)
     }
   })
