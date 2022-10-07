@@ -2,10 +2,11 @@
 
 ## Explorations
 
-- [] Monorepo with turborepo
-- [] Three JS
-- [] Node JS based server
-- [] Docker deployment
+- Monorepo with turborepo
+- Three JS
+- Node JS based server
+- Docker 
+- Azure ACI
 
 ## What's inside?
 
@@ -84,6 +85,26 @@ To shutdown all running containers:
 docker kill $(docker ps -q) && docker rm $(docker ps -a -q)
 ```
 
+## Azure deployment using ACI
+https://learn.microsoft.com/en-us/azure/container-instances/tutorial-docker-compose
+
+```shell
+az login
+az group create --name myResourceGroup --location eastus
+az acr create --resource-group myResourceGroup --name ghoshanjega --sku Basic
+az acr login --name ghoshanjega
+
+DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build --parallel
+docker-compose push
+
+docker login azure
+
+docker context create aci partycontext
+docker context use partycontext
+
+docker-compose -f docker-compose.yml up -d
+```
+
 ## Useful Links
 
 Learn more about the power of Turborepo:
@@ -94,3 +115,9 @@ Learn more about the power of Turborepo:
 - [Scoped Tasks](https://turborepo.org/docs/core-concepts/scopes)
 - [Configuration Options](https://turborepo.org/docs/reference/configuration)
 - [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
+
+,
+    // "nohoist": [
+    //   "**/games",
+    //   "**/games/**"
+    // ]
