@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: ./apps/games/Dockerfile
-    image:  ghoshanjega/party-games
+    image:  ghoshanjega.azurecr.io/party-games
     restart: always
     ports:
       - 3000:3000
@@ -17,7 +17,7 @@ services:
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile
-    image:  ghoshanjega/party-api
+    image:  ghoshanjega.azurecr.io/party-api
     restart: always
     ports:
       - 8080:8080
