@@ -5,7 +5,7 @@ import { GamePlayer, GamePlayerDto } from './GamePlayer'
 
 export interface GameRoomDto<Player extends GamePlayer> {
   name: string
-  engine: Player
+  engine: GameEngine<Player>
 }
 
 export type Rooms<Player extends GamePlayer> = { [key: string]: GameRoomDto<Player> }

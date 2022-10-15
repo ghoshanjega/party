@@ -1,43 +1,84 @@
+import React, { useState } from 'react'
 import { TopBar } from '@/components/layout/TopBar'
 import { emit } from '@/helpers/socket'
 import { useStore } from '@/helpers/store'
 import { useGetRooms } from '@/helpers/useGetRooms'
-import { Events, GameRoomDto } from 'interface'
-import React, { useState } from 'react'
+import { Agar, Events, GameEngine, GamePlayer, GameRoomDto } from 'interface'
+import {
+  Header,
+  StyledOcticon,
+  Avatar,
+  Box,
+  Label,
+  FormControl,
+  TextInput,
+  Button,
+} from '@primer/react'
+import { PersonIcon, StarFillIcon } from '@primer/octicons-react'
+import Image from 'next/image'
 
 const Navbar = () => {
   const { socket } = useStore()
   return (
-    <div className='row w-100'>
-      <div className='col'>Party games</div>
-      <div className='col'>Hello</div>
-    </div>
+    <Header>
+      <Header.Item>
+        <Header.Link href='#' fontSize={2}>
+          <StyledOcticon icon={StarFillIcon} size={32} sx={{ mr: 2 }} />
+          <span>Party</span>
+        </Header.Link>
+      </Header.Item>
+      {/* <Header.Item full>Menu</Header.Item> */}
+      {/* <Header.Item mr={0}>
+        <Avatar
+          src='https://github.com/octocat.png'
+          size={20}
+          square
+          alt='@octocat'
+        />
+      </Header.Item> */}
+    </Header>
   )
 }
 
 const RoomSelector = () => {
   const store = useStore()
   const rooms = useGetRooms()
-  const handleJoin = (room: GameRoomDto<any>) => {
+  const handleJoin = (room: GameRoomDto<GamePlayer>) => {
     emit(store, Events.JOIN_ROOM, { roomId: room.name })
   }
   if (rooms) {
     return (
-      <div className='w-100'>
-        {Object.entries(rooms).map(([key, room]) => (
-          <div key={key} className='w-100 p-3 d-flex justify-content-between'>
-            <div>{room.name}</div>
-            <div>
-              <button
-                className='btn btn-success'
+      <Box
+        borderColor='border.default'
+        borderWidth={1}
+        borderStyle='solid'
+        p={3}
+        // height={'300px'}
+      >
+        <Label>Join room</Label>
+        <Box display='flex'>
+          {Object.entries(rooms).map(([key, room]) => (
+            <Box p={3} key={key}>
+              <Button
+                style={{
+                  width: '150px',
+                  height: '80px',
+                }}
                 onClick={() => handleJoin(room)}
+                className={`d-flex flex-column justify-content-center 
+                align-items-center rounded-2 bg-primary`}
               >
-                Join
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+                <span className='badge'>{room.name}</span>
+                <br />
+                <span className='badge'>
+                  {Object.values(room.engine.players).length}
+                  <PersonIcon size={16} />
+                </span>
+              </Button>
+            </Box>
+          ))}
+        </Box>
+      </Box>
     )
   }
   return <></>
@@ -52,43 +93,72 @@ const CreateRoom = () => {
   }
 
   return (
-    <div className='p-5'>
-      <div className='mb-3'>
-        <label htmlFor='name' className='form-label'>
-          Room name
-        </label>
-        <input
-          type='text'
-          className='form-control'
-          id='name'
-          aria-describedby='Room name'
-          onChange={(e) => setName(e.target.value)}
-        />
+    <Box
+      borderColor='border.default'
+      borderWidth={1}
+      borderStyle='solid'
+      p={3}
+      // height={'300px'}
+    >
+      <Label>Create room</Label>
+      <div className='p-3'>
+        <FormControl>
+          <FormControl.Label>Room name</FormControl.Label>
+          <TextInput block onChange={(e) => setName(e.target.value)} />
+        </FormControl>
+        <Button onClick={handleCreate} disabled={name === ''} className='my-2'>
+          Create
+        </Button>
       </div>
-      <button
-        onClick={handleCreate}
-        disabled={name === ''}
-        className='btn btn-primary'
-      >
-        Create room
-      </button>
-    </div>
+    </Box>
   )
+}
+const games = {
+  agar: {
+    label: 'Agar',
+    image: '/img/agar.png',
+  },
 }
 
 const GameLibrary = () => {
-  return <></>
+  return (
+    <Box
+      borderColor='border.default'
+      borderWidth={1}
+      borderStyle='solid'
+      p={3}
+      // height={'300px'}
+    >
+      <Label>Game Library</Label>
+      <Box display='flex'>
+        {Object.entries(games).map(([key, game]) => (
+          <Box p={3} key={key}>
+            <div
+              style={{
+                width: '150px',
+                height: '200px',
+              }}
+              className={`d-flex flex-column justify-content-center 
+                align-items-center rounded-2 bg-dark bg-gradient`}
+            >
+              <span className='badge text-wrap fs-3'>{game.label}</span>
+            </div>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  )
 }
 
 function Index() {
+  console.log('render Index')
   return (
     <React.Fragment>
-      <TopBar>
-        <Navbar />
-      </TopBar>
+      <Navbar />
+      {/* <TopBar></TopBar> */}
       <GameLibrary />
-      <RoomSelector />
       <CreateRoom />
+      <RoomSelector />
     </React.Fragment>
   )
 }

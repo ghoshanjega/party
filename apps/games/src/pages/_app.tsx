@@ -6,6 +6,7 @@ import Dom from '@/components/layout/dom'
 import dynamic from 'next/dynamic'
 import { AppProps } from 'next/app'
 import { setupListners } from '@/helpers/socket'
+import { BaseStyles, ThemeProvider } from '@primer/react'
 
 import '@/styles/index.css'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -27,7 +28,7 @@ function App({
   const router = useRouter()
 
   useEffect(() => {
-    if (!store.room) {
+    if (!store.room && router.pathname !== '/') {
       router.push('/')
     }
   }, [store.room, router])
@@ -46,7 +47,6 @@ function App({
     })
 
     setupListners(store, useStore.setState, router)
-    // setupListners(socket, (game) => useStore.setState({ game }))
 
     return () => {
       store.socket.off('connect')
@@ -55,12 +55,16 @@ function App({
     }
   }, [router, store, store.socket])
 
+  // useEffect(() => {
+  //   setupListners(store, useStore.setState, router)
+  // }, [])
+
   useEffect(() => {
     useStore.setState({ router })
   }, [router])
-
   return (
-    <>
+    <ThemeProvider>
+      {/* <BaseStyles> */}
       <Header title={pageProps.title} />
       <Dom>
         <Component {...pageProps} />
@@ -68,7 +72,8 @@ function App({
       {store.room && (Component as any)?.r3f && (
         <LCanvas>{(Component as any).r3f()}</LCanvas>
       )}
-    </>
+      {/* </BaseStyles> */}
+    </ThemeProvider>
   )
 }
 

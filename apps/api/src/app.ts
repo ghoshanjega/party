@@ -38,8 +38,10 @@ app.ready((err) => {
   if (err) throw err
   app.io.on('connection', (socket: Socket) => {
     socket.on(Events.JOIN_ROOM, (data: { roomId: string }) => {
-      if (gameRooms.has(data.roomId)) {
+      const gameRoom = gameRooms.get(data.roomId)
+      if (gameRoom) {
         socket.join(data.roomId)
+        socket.emit(Events.JOINED_ROOM, gameRoom.serialize())
       } else {
         // TODO: Multiple game engines
         const engine = new Agar.Engine()

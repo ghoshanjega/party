@@ -1,0 +1,6 @@
+**/node_modules/eslint-config-custom
+**/node_modules/interface
+**/node_modules/jest-presets
+**/node_modules/tsconfig
+**/node_modules/logger
+.git

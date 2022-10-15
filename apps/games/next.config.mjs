@@ -1,9 +1,16 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
-const withPWA = require('next-pwa')
-const runtimeCaching = require('next-pwa/cache')
 
+// const withBundleAnalyzer = require('@next/bundle-analyzer')({
+//   enabled: process.env.ANALYZE === 'true',
+// })
+// const withPWA = require('next-pwa')
+// const runtimeCaching = require('next-pwa/cache')
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
   webpack(config, { isServer }) {
     // audio support
@@ -59,7 +66,7 @@ const KEYS_TO_OMIT = [
   'experimental',
 ]
 
-module.exports = (_phase, { defaultConfig }) => {
+const config = (_phase, { defaultConfig }) => {
   const plugins = [
     // [
     //   withPWA,
@@ -71,7 +78,7 @@ module.exports = (_phase, { defaultConfig }) => {
     //     },
     //   },
     // ],
-    [withBundleAnalyzer, {}],
+    // [withBundleAnalyzer, {}],
   ]
 
   const wConfig = plugins.reduce(
@@ -93,6 +100,8 @@ module.exports = (_phase, { defaultConfig }) => {
 
   return {
     ...finalConfig,
-    // output: 'standalone', 
+    output: 'standalone',
   }
 }
+
+export default config

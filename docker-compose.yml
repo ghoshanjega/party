@@ -1,21 +1,23 @@
 version: "3"
 
 services:
-  games:
-    container_name: games
+  party-games:
+    container_name: party-games
     build:
       context: .
       dockerfile: ./apps/games/Dockerfile
+    image:  ghoshanjega.azurecr.io/party-games
     restart: always
     ports:
       - 3000:3000
     networks:
       - app_network
-  api:
-    container_name: api
+  party-api:
+    container_name: party-api
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile
+    image:  ghoshanjega.azurecr.io/party-api
     restart: always
     ports:
       - 8080:8080

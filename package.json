@@ -6,6 +6,10 @@
     "packages": [
       "apps/*",
       "packages/*"
+    ],
+    "nohoist": [
+      "**/games",
+      "**/games/**"
     ]
   },
   "scripts": {
