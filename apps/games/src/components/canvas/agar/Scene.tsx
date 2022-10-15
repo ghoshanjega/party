@@ -13,7 +13,7 @@ import { MouseMove, startCapturingInput, stopCapturingInput } from './controls'
 import { calcDirection, getPlayer, calcSpeed } from './logic'
 import { Rig } from './Rig'
 
-export const Scene = ({}) => {
+export const Scene = ({ }) => {
   const clock = useRef(0)
   const store = useStore()
 
@@ -36,7 +36,7 @@ export const Scene = ({}) => {
   }, [])
   const player = getPlayer(store.room.engine, store.socket.id) as Agar.Player
 
-  const [{}, set] = useControls(() => ({
+  const [{ }, set] = useControls(() => ({
     name: { value: 'default', editable: false },
     score: { value: 0, editable: false },
     direction: { value: 0, editable: false },
@@ -63,7 +63,6 @@ export const Scene = ({}) => {
     }
   }, [player, set, store.room.engine])
 
-  // console.log('player', player.body)
 
   if (store.room.engine && Object.keys(store.room.engine).length !== 0) {
     return (

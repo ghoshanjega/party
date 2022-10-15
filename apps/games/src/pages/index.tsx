@@ -53,7 +53,6 @@ const RoomSelector = () => {
         borderWidth={1}
         borderStyle='solid'
         p={3}
-        // height={'300px'}
       >
         <Label>Join room</Label>
         <Box display='flex'>
@@ -98,7 +97,7 @@ const CreateRoom = () => {
       borderWidth={1}
       borderStyle='solid'
       p={3}
-      // height={'300px'}
+    // height={'300px'}
     >
       <Label>Create room</Label>
       <div className='p-3'>
@@ -127,7 +126,7 @@ const GameLibrary = () => {
       borderWidth={1}
       borderStyle='solid'
       p={3}
-      // height={'300px'}
+    // height={'300px'}
     >
       <Label>Game Library</Label>
       <Box display='flex'>
@@ -151,7 +150,6 @@ const GameLibrary = () => {
 }
 
 function Index() {
-  console.log('render Index')
   return (
     <React.Fragment>
       <Navbar />

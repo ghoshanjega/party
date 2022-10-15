@@ -1,6 +1,6 @@
 import { useStore } from '@/helpers/store'
 import { useFrame } from '@react-three/fiber'
-import { Agar } from 'interface'
+import { Agar, GameEngine } from 'interface'
 import React, { ReactNode, useRef } from 'react'
 import * as THREE from 'three'
 import { EffectComposer, SSAO } from '@react-three/postprocessing'
@@ -39,7 +39,7 @@ function Lights() {
 export const Rig = ({ children }: { children: ReactNode }) => {
   const { socket, room } = useStore()
 
-  const player = getPlayer(room.engine, socket.id) as Agar.Player
+  const player = getPlayer(room.engine as unknown as Agar.EngineDto, socket.id) as Agar.Player
   const outer = useRef<THREE.Group>(null!)
   const inner = useRef<THREE.Group>(null!)
   useFrame(({ camera, clock }) => {
@@ -48,8 +48,6 @@ export const Rig = ({ children }: { children: ReactNode }) => {
       camera.position.y = player.body.y
       camera.position.z = player.body.size * 2 + 1000
     }
-
-    console.log(camera)
   })
   return (
     <>

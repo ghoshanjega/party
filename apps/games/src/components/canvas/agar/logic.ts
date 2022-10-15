@@ -14,7 +14,6 @@ export const getPlayer = (game: Agar.EngineDto, id: string) => {
 export const calcDirection = (x: number, y: number) => {
   const rad = Math.atan2(x - window.innerWidth / 2, window.innerHeight / 2 - y)
   const dir = (rad * 180) / Math.PI
-  // console.log("dr", x, y, rad, dir, "x: ", Math.sin(rad), ", y: ", Math.cos(rad))
   return rad
 }
 
@@ -26,7 +25,7 @@ export const calcSpeed = (x: number, y: number, viewport: Viewport) => {
   const max_distance = Math.pow(width / 2, 2) + Math.pow(height / 2, 2) / 2
   return (
     (Agar.C.PLAYER_MAX_SPEED - Agar.C.PLAYER_MIN_SPEED) *
-      (distance / max_distance) +
+    (distance / max_distance) +
     Agar.C.PLAYER_MIN_SPEED
   )
 }
