@@ -5,7 +5,7 @@
 - Monorepo with turborepo
 - Three JS
 - Node JS based server
-- Docker 
+- Docker
 - Azure ACI
 
 ## What's inside?
@@ -71,6 +71,10 @@ docker network create app_network
 # Build prod using new BuildKit engine
 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build --parallel
 
+# Alternatively, build each app separately from root context
+docker build -f apps/games/Dockerfile .
+docker build -f apps/api/Dockerfile .
+
 # Start prod in detached mode
 docker-compose -f docker-compose.yml up -d
 ```
@@ -86,6 +90,7 @@ docker kill $(docker ps -q) && docker rm $(docker ps -a -q)
 ```
 
 ## Azure deployment using ACI
+
 https://learn.microsoft.com/en-us/azure/container-instances/tutorial-docker-compose
 
 ```shell
@@ -117,7 +122,7 @@ Learn more about the power of Turborepo:
 - [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
 
 ,
-    // "nohoist": [
-    //   "**/games",
-    //   "**/games/**"
-    // ]
+// "nohoist": [
+// "**/games",
+// "**/games/**"
+// ]
