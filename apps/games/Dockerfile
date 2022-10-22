@@ -1,5 +1,6 @@
 FROM node:alpine AS builder
 RUN apk update
+RUN apk add --no-cache libc6-compat
 # Set working directory
 WORKDIR /app
 RUN yarn global add turbo
