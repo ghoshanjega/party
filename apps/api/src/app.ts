@@ -2,7 +2,7 @@ import fastify from 'fastify'
 import cors from '@fastify/cors'
 import socketioServer from 'fastify-socket.io'
 
-import { GameRoom, Agar, Events, GamePlayer, RoomsDto } from 'interface'
+import { GameRoom, Agar, Events, GamePlayer, GameRoomsDto, GameEngineDto, GamePlayerDto } from 'interface'
 import { Socket } from 'socket.io'
 import { generateName } from './utils/player.js'
 
@@ -27,7 +27,7 @@ app.get('/ping', async (request, reply) => {
 })
 
 app.get('/rooms', async (request, reply) => {
-  const rooms: RoomsDto<any> = {
+  const rooms: GameRoomsDto<GameEngineDto<GamePlayerDto>, GamePlayerDto> = {
     rooms: Object.fromEntries(new Map(Array.from(gameRooms).map(([key, value]) => [key, { name: value.name, engine: value.engine.serialize() }]))),
   }
   reply.send(rooms)

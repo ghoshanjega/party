@@ -3,7 +3,16 @@ import { TopBar } from '@/components/layout/TopBar'
 import { emit } from '@/helpers/socket'
 import { useStore } from '@/helpers/store'
 import { useGetRooms } from '@/helpers/useGetRooms'
-import { Agar, Events, GameEngine, GamePlayer, GameRoomDto } from 'interface'
+import {
+  Agar,
+  Events,
+  GameEngine,
+  GameEngineDto,
+  GamePlayer,
+  GamePlayerDto,
+  GameRoomDto,
+  GameRoomsDto,
+} from 'interface'
 import {
   Header,
   StyledOcticon,
@@ -22,7 +31,7 @@ const Navbar = () => {
   return (
     <Header>
       <Header.Item>
-        <Header.Link href='#' fontSize={2}>
+        <Header.Link href='#'>
           <StyledOcticon icon={StarFillIcon} size={32} sx={{ mr: 2 }} />
           <span>Party</span>
         </Header.Link>
@@ -43,7 +52,9 @@ const Navbar = () => {
 const RoomSelector = () => {
   const store = useStore()
   const rooms = useGetRooms()
-  const handleJoin = (room: GameRoomDto<GamePlayer>) => {
+  const handleJoin = (
+    room: GameRoomDto<GameEngineDto<GamePlayerDto>, GamePlayerDto>
+  ) => {
     emit(store, Events.JOIN_ROOM, { roomId: room.name })
   }
   if (rooms) {
@@ -97,11 +108,13 @@ const CreateRoom = () => {
       borderWidth={1}
       borderStyle='solid'
       p={3}
-    // height={'300px'}
+      // height={'300px'}
     >
       <Label>Create room</Label>
       <div className='p-3'>
         <FormControl>
+          {/* 
+          // @ts-ignore */}
           <FormControl.Label>Room name</FormControl.Label>
           <TextInput block onChange={(e) => setName(e.target.value)} />
         </FormControl>
@@ -126,7 +139,7 @@ const GameLibrary = () => {
       borderWidth={1}
       borderStyle='solid'
       p={3}
-    // height={'300px'}
+      // height={'300px'}
     >
       <Label>Game Library</Label>
       <Box display='flex'>

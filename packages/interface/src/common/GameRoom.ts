@@ -3,15 +3,13 @@ import { GameEngine, GameEngineDto } from './GameEngine'
 import { Events } from './GameEvents'
 import { GamePlayer, GamePlayerDto } from './GamePlayer'
 
-export interface GameRoomDto<Player extends GamePlayer> {
+export interface GameRoomDto<EngineDto extends GameEngineDto<PlayerDto>, PlayerDto extends GamePlayerDto> {
   name: string
-  engine: GameEngine<Player>
+  engine: EngineDto
 }
 
-export type Rooms<Player extends GamePlayer> = { [key: string]: GameRoomDto<Player> }
-
-export interface RoomsDto<Player extends GamePlayer> {
-  rooms: Rooms<Player>
+export interface GameRoomsDto<EngineDto extends GameEngineDto<PlayerDto>, PlayerDto extends GamePlayerDto> {
+  rooms: { [key: string]: GameRoomDto<EngineDto, PlayerDto> }
 }
 
 export class GameRoom<Player extends GamePlayer> {
@@ -30,7 +28,7 @@ export class GameRoom<Player extends GamePlayer> {
   }
   // this.engine.serialize()
 
-  serialize(): GameRoomDto<Player> {
+  serialize(): GameRoomDto<GameEngineDto<GamePlayerDto>, GamePlayerDto> {
     return {
       name: this.name,
       engine: this.engine.serialize(),

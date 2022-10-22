@@ -3,7 +3,7 @@ import { Agar } from 'interface'
 import React, { Fragment, useRef } from 'react'
 import Agar3D from './Agar3D'
 
-const Agars3D = ({ agars }: { agars: Agar.Agars }) => {
+const Agars3D = ({ agars }: { agars: { [key: string]: Agar.AgarDto } }) => {
   const ref = useRef()
   const agarsArray = Object.values(agars || {}).filter((a) => a != null)
   if (agarsArray.length > 0) {

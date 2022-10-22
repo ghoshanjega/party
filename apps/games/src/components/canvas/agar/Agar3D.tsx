@@ -16,7 +16,7 @@ import { Instance, RoundedBox } from '@react-three/drei'
 import { BufferGeometry, Material, Mesh } from 'three'
 import { useSphere } from '@react-three/cannon'
 
-const Agar3D = ({ agar }: { agar: Agar.Agar }): JSX.Element => {
+const Agar3D = ({ agar }: { agar: Agar.AgarDto }): JSX.Element => {
   // const mesh = createRef<THREE.Mesh>()
   // const [hovered, setHover] = useState(false)
   // const [active, setActive] = useState(false)

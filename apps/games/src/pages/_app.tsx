@@ -6,7 +6,7 @@ import Dom from '@/components/layout/dom'
 import dynamic from 'next/dynamic'
 import { AppProps } from 'next/app'
 import { setupListners } from '@/helpers/socket'
-import { BaseStyles, ThemeProvider } from '@primer/react'
+import { ThemeProvider } from '@primer/react'
 
 import '@/styles/index.css'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -63,8 +63,8 @@ function App({
     useStore.setState({ router })
   }, [router])
   return (
+    // @ts-ignore
     <ThemeProvider>
-      {/* <BaseStyles> */}
       <Header title={pageProps.title} />
       <Dom>
         <Component {...pageProps} />
@@ -72,7 +72,6 @@ function App({
       {store.room && (Component as any)?.r3f && (
         <LCanvas>{(Component as any).r3f()}</LCanvas>
       )}
-      {/* </BaseStyles> */}
     </ThemeProvider>
   )
 }

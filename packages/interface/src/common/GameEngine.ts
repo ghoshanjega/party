@@ -1,9 +1,9 @@
 import { Socket } from 'socket.io'
 import { GamePlayer, GamePlayers } from './GamePlayer'
 
-export interface GameEngineDto<Player> {
+export interface GameEngineDto<PlayerDto> {
   location: string
-  players: { [key: string]: Player }
+  players: { [key: string]: PlayerDto }
 }
 
 export abstract class GameEngine<Player extends GamePlayer> {

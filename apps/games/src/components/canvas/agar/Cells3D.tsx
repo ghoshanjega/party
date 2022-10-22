@@ -1,9 +1,13 @@
-import { GamePlayers, Agar } from 'interface'
+import { GamePlayers, Agar, GamePlayerDto } from 'interface'
 import React, { Fragment } from 'react'
 import Agar3D from './Agar3D'
 import Cell3D from './Cell3D'
 
-const Cells3D = ({ players }: { players: GamePlayers<Agar.Player> }) => {
+const Cells3D = ({
+  players,
+}: {
+  players: { [key: string]: Agar.PlayerDto }
+}) => {
   const cellsArray = Object.values(players || {}).filter(
     (a) => a != null
   ) as Agar.Player[]

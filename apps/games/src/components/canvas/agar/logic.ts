@@ -1,11 +1,14 @@
 import { Viewport } from '@react-three/fiber'
-import { Agar } from 'interface'
+import { Agar, GameEngineDto, GamePlayerDto } from 'interface'
 
-export const getPlayer = (game: Agar.EngineDto, id: string) => {
+export const getPlayer = <Player>(
+  game: GameEngineDto<GamePlayerDto>,
+  id: string
+) => {
   if (game) {
     const player = game.players[id]
     if (player) {
-      return player as Agar.Player
+      return player as Player
     }
   }
   return null
@@ -25,7 +28,7 @@ export const calcSpeed = (x: number, y: number, viewport: Viewport) => {
   const max_distance = Math.pow(width / 2, 2) + Math.pow(height / 2, 2) / 2
   return (
     (Agar.C.PLAYER_MAX_SPEED - Agar.C.PLAYER_MIN_SPEED) *
-    (distance / max_distance) +
+      (distance / max_distance) +
     Agar.C.PLAYER_MIN_SPEED
   )
 }

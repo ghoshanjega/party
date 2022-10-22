@@ -3,7 +3,7 @@ import { useStore } from '@/helpers/store'
 import { Physics } from '@react-three/cannon'
 import { Stats } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
-import { Events, Agar } from 'interface'
+import { Events, Agar, GameRoomDto } from 'interface'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
@@ -13,9 +13,10 @@ import { MouseMove, startCapturingInput, stopCapturingInput } from './controls'
 import { calcDirection, getPlayer, calcSpeed } from './logic'
 import { Rig } from './Rig'
 
-export const Scene = ({ }) => {
+export const Scene = ({}) => {
   const clock = useRef(0)
   const store = useStore()
+  const room = store.room as GameRoomDto<Agar.EngineDto, Agar.PlayerDto>
 
   const { gl, scene, size, events, viewport } = useThree()
 
@@ -34,9 +35,10 @@ export const Scene = ({ }) => {
       stopCapturingInput(handleMouseMove)
     }
   }, [])
-  const player = getPlayer(store.room.engine, store.socket.id) as Agar.Player
 
-  const [{ }, set] = useControls(() => ({
+  const player = getPlayer<Agar.Player>(room.engine, store.socket.id)
+
+  const [{}, set] = useControls(() => ({
     name: { value: 'default', editable: false },
     score: { value: 0, editable: false },
     direction: { value: 0, editable: false },
@@ -58,11 +60,9 @@ export const Scene = ({ }) => {
         score: player.score,
         speed: player.body.speed,
         size: player.body.size,
-        agarCount: Object.keys((store.room.engine as Agar.Engine).agars).length,
       })
     }
   }, [player, set, store.room.engine])
-
 
   if (store.room.engine && Object.keys(store.room.engine).length !== 0) {
     return (
@@ -70,8 +70,8 @@ export const Scene = ({ }) => {
         <Rig>
           <Stats showPanel={0} className='stats' />
           <Physics iterations={1}>
-            <Agars3D agars={(store.room.engine as Agar.Engine).agars} />
-            <Cells3D players={store.room.engine.players} />
+            <Agars3D agars={room.engine.agars} />
+            <Cells3D players={room.engine.players} />
           </Physics>
         </Rig>
       </>

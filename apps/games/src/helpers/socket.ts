@@ -1,4 +1,10 @@
-import { GameEngine, Events, GameRoomDto, GameEngineDto } from 'interface'
+import {
+  GameEngine,
+  Events,
+  GameRoomDto,
+  GameEngineDto,
+  GamePlayerDto,
+} from 'interface'
 import { NextRouter } from 'next/router'
 import { Socket } from 'socket.io-client'
 import { StoreState, useStore } from './store'
@@ -19,13 +25,19 @@ export const setupListners = (
   setState: typeof useStore.setState,
   router: NextRouter
 ) => {
-  store.socket.on(Events.GAME_STATE, (state: GameRoomDto<any>) => {
-    setState({ room: state })
-  })
-  store.socket.on(Events.JOINED_ROOM, (room: GameRoomDto<any>) => {
-    setState({ room: room })
-    if (room.engine.location !== GameEngine.identifier) {
-      router.push(room.engine.location)
+  store.socket.on(
+    Events.GAME_STATE,
+    (state: GameRoomDto<GameEngineDto<GamePlayerDto>, GamePlayerDto>) => {
+      setState({ room: state })
     }
-  })
+  )
+  store.socket.on(
+    Events.JOINED_ROOM,
+    (room: GameRoomDto<GameEngineDto<GamePlayerDto>, GamePlayerDto>) => {
+      setState({ room: room })
+      if (room.engine.location !== GameEngine.identifier) {
+        router.push(room.engine.location)
+      }
+    }
+  )
 }
