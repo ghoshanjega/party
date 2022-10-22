@@ -113,8 +113,6 @@ const CreateRoom = () => {
       <Label>Create room</Label>
       <div className='p-3'>
         <FormControl>
-          {/* 
-          // @ts-ignore */}
           <FormControl.Label>Room name</FormControl.Label>
           <TextInput block onChange={(e) => setName(e.target.value)} />
         </FormControl>

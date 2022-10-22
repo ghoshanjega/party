@@ -33,7 +33,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 USER nextjs
 
-COPY --from=installer /app/apps/games/next.config.js ./apps/games/
+COPY --from=installer /app/apps/games/next.config.mjs ./apps/games/
 COPY --from=installer /app/apps/games/package.json ./apps/games/
 
 # COPY --from=installer ./node_modules ./

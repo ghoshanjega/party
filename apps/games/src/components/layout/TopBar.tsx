@@ -4,7 +4,9 @@ interface Props {
   children: React.ReactNode
 }
 
-export const TopBar: React.FC<Props> = ({ children }) => {
+export const TopBar: React.FC<React.PropsWithChildren<Props>> = ({
+  children,
+}) => {
   return (
     <div
       style={{

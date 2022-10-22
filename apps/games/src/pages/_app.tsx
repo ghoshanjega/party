@@ -63,7 +63,6 @@ function App({
     useStore.setState({ router })
   }, [router])
   return (
-    // @ts-ignore
     <ThemeProvider>
       <Header title={pageProps.title} />
       <Dom>

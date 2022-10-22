@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@primer/octicons-react": "^17.7.0",
-    "@primer/react": "35.5.0",
+    "@primer/react": "^35.5.0",
     "@react-spring/three": "^9.5.2",
     "@react-three/cannon": "^6.4.0",
     "@react-three/drei": "^9.14.3",
