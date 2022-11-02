@@ -6,12 +6,6 @@ processes = []
 [build]
   dockerfile = "./apps/games/Dockerfile"
 
-[build.args]
-  NEXT_PUBLIC_API_URL = "https://party-api.fly.dev"
-  
-[env]
-  NEXT_PUBLIC_API_URL = "https://party-api.fly.dev"
-
 [experimental]
   allowed_public_ports = []
   auto_rollback = true

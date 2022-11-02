@@ -1,5 +1,3 @@
-ARG NEXT_PUBLIC_API_URL
-
 FROM node:alpine AS builder
 RUN apk update
 RUN apk add --no-cache libc6-compat
@@ -21,7 +19,6 @@ COPY --from=builder /app/out/yarn.lock ./yarn.lock
 RUN yarn install
 
 # Build the project
-ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 RUN yarn turbo run build --filter=games...

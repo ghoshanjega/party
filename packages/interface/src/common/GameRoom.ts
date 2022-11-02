@@ -20,13 +20,12 @@ export class GameRoom<Player extends GamePlayer> {
     this.engine = engine
     this.name = name
     this.io = io
-    setInterval(this.emitState.bind(this), 1000 / 30)
+    setInterval(this.emitState.bind(this), 1000 / 10) // TODO
   }
 
   emitState() {
     this.io.to(this.name).emit(Events.GAME_STATE, this.serialize())
   }
-  // this.engine.serialize()
 
   serialize(): GameRoomDto<GameEngineDto<GamePlayerDto>, GamePlayerDto> {
     return {

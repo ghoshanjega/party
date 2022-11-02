@@ -1,12 +1,15 @@
 # Party games
 
-## Explorations
+## What I want to explore
 
 - Monorepo with turborepo
 - Three JS
 - Node JS based server
+- Socket.io
 - Docker
 - Azure ACI
+- Github Workflow
+- [Bun](https://bun.sh/) => Faster for nextjs, but doesn't support some web socket modules
 
 ## What's inside?
 
@@ -117,11 +120,3 @@ fly deploy --config fly.games.toml
 fly deploy --config fly.api.toml
 
 ```
-
-,
-// "nohoist": [
-// "**/games",
-// "**/games/**"
-// ]
-
-fly launch --dockerfile ./apps/games/Dockerfile --local-only
