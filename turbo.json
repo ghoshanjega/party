@@ -2,6 +2,7 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "build": {
+      "cache": false,
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
@@ -12,5 +13,5 @@
       "cache": false
     }
   },
-  "globalEnv": ["EXPORT", "ANALYZE"]
+  "globalEnv": ["EXPORT", "ANALYZE", "NEXT_PUBLIC_API_URL"]
 }

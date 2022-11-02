@@ -4,12 +4,15 @@ import create from 'zustand'
 import shallow from 'zustand/shallow'
 import io from 'socket.io-client'
 import { GameEngineDto, GamePlayerDto, GameRoomDto } from 'interface'
+import { URI } from './api'
 
 // const socket = io(`ws://localhost:3001`, {
 //   path: "/socket.io"
 // });
 
-const socket = io('ws://localhost:8080')
+const socket = io(URI.replace('http', 'ws'), {
+  transports: ['websocket'],
+})
 
 export interface StoreState {
   router: NextRouter

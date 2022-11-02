@@ -9,7 +9,7 @@ services:
     image:  ghoshanjega/party-games
     restart: always
     ports:
-      - 3000:3000
+      - 3005:3005
     networks:
       - app_network
   party-api:

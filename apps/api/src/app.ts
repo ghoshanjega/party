@@ -14,6 +14,7 @@ app.register(socketioServer, {
   cors: {
     origin: '*',
   },
+  transports: ['websocket'], // No Http polling as it is high bandwidth and slow
   logLevel: 'debug',
 })
 

@@ -24,7 +24,7 @@ export class Engine extends GameEngine<Player> {
     this.agars = new Map()
     this.lastUpdateTime = Date.now()
     this.shouldSendUpdate = false
-    setInterval(this.update.bind(this), 1000 / 60)
+    setInterval(this.update.bind(this), 1000 / 30)
     this.initialize()
   }
 

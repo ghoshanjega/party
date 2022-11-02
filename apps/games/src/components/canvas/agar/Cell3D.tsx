@@ -17,10 +17,6 @@ const Cell3D = ({ player }: { player: Agar.Player }): JSX.Element => {
   const [active, setActive] = useState(false)
   const s = player.body.size
 
-  // const [ref, api] = useSphere(() => ({ mass: 1, angularDamping: 0.1, linearDamping: 1, position: [0, 0, 0] }))
-  // useFrame(() => {
-  //   api.position.set(player.x, player.y, 0)
-  // })
   return (
     <mesh
       // {...props}

@@ -110,19 +110,18 @@ docker context use partycontext
 docker-compose -f docker-compose.yml up -d
 ```
 
-## Useful Links
+## Fly deployment
 
-Learn more about the power of Turborepo:
+```
+fly deploy --config fly.games.toml
+fly deploy --config fly.api.toml
 
-- [Pipelines](https://turborepo.org/docs/core-concepts/pipelines)
-- [Caching](https://turborepo.org/docs/core-concepts/caching)
-- [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching)
-- [Scoped Tasks](https://turborepo.org/docs/core-concepts/scopes)
-- [Configuration Options](https://turborepo.org/docs/reference/configuration)
-- [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
+```
 
 ,
 // "nohoist": [
 // "**/games",
 // "**/games/**"
 // ]
+
+fly launch --dockerfile ./apps/games/Dockerfile --local-only

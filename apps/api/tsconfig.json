@@ -1,22 +1,18 @@
 {
+  "extends": "tsconfig/base.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "esModuleInterop": true,
-    "target": "ESNext",
-    "moduleResolution": "Node",
-    "outDir": "dist",
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "isolatedModules": false,
-    "strict": true,
-    "noImplicitAny": true,
-    "useUnknownInCatchVariables": false,
-    "inlineSourceMap": true
+    "target": "es2017",
+    "lib": [
+      "ES2015"
+    ],
+    "module": "ES2022",
+    "outDir": "./dist",
+    "rootDir": "./src"
   },
-  "ts-node": {
-    "esm": true
-  },
-  "lib": [
-    "esnext"
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src"
   ]
 }

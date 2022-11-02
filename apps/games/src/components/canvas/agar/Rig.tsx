@@ -39,10 +39,12 @@ function Lights() {
 export const Rig = ({ children }: { children: ReactNode }) => {
   const { socket, room } = useStore()
 
-  const player = getPlayer(room.engine as unknown as Agar.EngineDto, socket.id) as Agar.Player
-  const outer = useRef<THREE.Group>(null!)
-  const inner = useRef<THREE.Group>(null!)
-  useFrame(({ camera, clock }) => {
+  const player = getPlayer(
+    room.engine as unknown as Agar.EngineDto,
+    socket.id
+  ) as Agar.Player
+
+  useFrame(({ camera }) => {
     if (player) {
       camera.position.x = player.body.x
       camera.position.y = player.body.y
@@ -65,10 +67,10 @@ export const Rig = ({ children }: { children: ReactNode }) => {
         // position={[500, 500, 100]}
         far={2000}
       />
-      <color attach='background' args={['#f0f0f0']} />
+      <color attach='background' args={['#f0f0f1']} />
       {/* <fog attach='fog' args={['white', 90, 110]} /> */}
       <Lights />
-      <EffectComposer multisampling={0}>
+      {/* <EffectComposer multisampling={0}>
         <SSAO
           samples={31}
           radius={0.1}
@@ -76,7 +78,7 @@ export const Rig = ({ children }: { children: ReactNode }) => {
           luminanceInfluence={0.1}
           color='red'
         />
-      </EffectComposer>
+      </EffectComposer> */}
       {children}
     </>
   )

@@ -1,3 +1,5 @@
+ARG NEXT_PUBLIC_API_URL
+
 FROM node:alpine AS builder
 RUN apk update
 RUN apk add --no-cache libc6-compat
@@ -19,6 +21,7 @@ COPY --from=builder /app/out/yarn.lock ./yarn.lock
 RUN yarn install
 
 # Build the project
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 RUN yarn turbo run build --filter=games...
@@ -33,7 +36,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 USER nextjs
 
-COPY --from=installer /app/apps/games/next.config.mjs ./apps/games/
+COPY --from=installer /app/apps/games/next.config.js ./apps/games/
 COPY --from=installer /app/apps/games/package.json ./apps/games/
 
 # COPY --from=installer ./node_modules ./
@@ -42,6 +45,7 @@ COPY --from=installer /app/apps/games/package.json ./apps/games/
 COPY --from=installer --chown=nextjs:nodejs /app/apps/games/.next/standalone ./apps/games/
 COPY --from=installer --chown=nextjs:nodejs /app/apps/games/.next/static ./apps/games/.next/static
 
-EXPOSE 3000
+ENV PORT=3005
+EXPOSE 3005
 CMD node apps/games/server.js
 # CMD yarn turbo run dev --filter=games

@@ -1,4 +1,4 @@
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber'
 import { OrbitControls, OrthographicCamera, Preload } from '@react-three/drei'
 import { StoreState, useStore } from '@/helpers/store'
 import { ReactNode, useEffect, useRef } from 'react'
@@ -26,7 +26,7 @@ const LCanvas = ({ children }: { children: ReactNode }) => {
 
   return (
     <Canvas
-      // mode='concurrent'
+      frameloop='demand'
       // style={{
       //   position: 'relative',
       //   top: 0,
