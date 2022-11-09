@@ -1,13 +1,7 @@
-import { useStore } from '@/helpers/store'
 import { useFrame } from '@react-three/fiber'
 import { Agar } from 'interface'
-import { AppProps } from 'next/app'
 import React, { createRef, useState } from 'react'
-import { useSprings, a } from '@react-spring/three'
 import * as THREE from 'three'
-import { RoundedBox, useTexture } from '@react-three/drei'
-import { BufferGeometry, Material, Mesh } from 'three'
-import { Physics, usePlane, useSphere } from '@react-three/cannon'
 
 const Cell3D = ({ player }: { player: Agar.Player }): JSX.Element => {
   // This reference will give us direct access to the mesh
@@ -17,14 +11,17 @@ const Cell3D = ({ player }: { player: Agar.Player }): JSX.Element => {
   const [active, setActive] = useState(false)
   const s = player.body.size
 
+  useFrame(({}) => {
+    const position = new THREE.Vector3(player.body.x, player.body.y, 0)
+    if (mesh.current) {
+      mesh.current.position.lerp(position, 0.1)
+    }
+  })
+
   return (
     <mesh
-      // {...props}
-      // // @ts-ignore
-      // ref={ref}
       ref={mesh}
-      position={[player.body.x, player.body.y, 0]}
-      scale={active ? 1.5 : 1}
+      // position={position}
       onClick={(event) => setActive(!active)}
       onPointerOver={(event) => setHover(true)}
       onPointerOut={(event) => setHover(false)}

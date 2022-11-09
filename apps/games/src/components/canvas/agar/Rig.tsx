@@ -46,9 +46,12 @@ export const Rig = ({ children }: { children: ReactNode }) => {
 
   useFrame(({ camera }) => {
     if (player) {
-      camera.position.x = player.body.x
-      camera.position.y = player.body.y
-      camera.position.z = player.body.size * 2 + 1000
+      const vec = new THREE.Vector3(
+        player.body.x,
+        player.body.y,
+        player.body.size * 2 + 1000
+      )
+      camera.position.lerp(vec, 0.1)
     }
   })
   return (

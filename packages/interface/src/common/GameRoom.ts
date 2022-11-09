@@ -20,7 +20,7 @@ export class GameRoom<Player extends GamePlayer> {
     this.engine = engine
     this.name = name
     this.io = io
-    setInterval(this.emitState.bind(this), 1000 / 10) // TODO
+    setInterval(this.emitState.bind(this), 1000 / 6) // TODO: updates per second
   }
 
   emitState() {

@@ -3,16 +3,7 @@ import { TopBar } from '@/components/layout/TopBar'
 import { emit } from '@/helpers/socket'
 import { useStore } from '@/helpers/store'
 import { useGetRooms } from '@/helpers/useGetRooms'
-import {
-  Agar,
-  Events,
-  GameEngine,
-  GameEngineDto,
-  GamePlayer,
-  GamePlayerDto,
-  GameRoomDto,
-  GameRoomsDto,
-} from 'interface'
+import { Events, GameEngineDto, GamePlayerDto, GameRoomDto } from 'interface'
 import {
   Header,
   StyledOcticon,
@@ -24,7 +15,6 @@ import {
   Button,
 } from '@primer/react'
 import { PersonIcon, StarFillIcon } from '@primer/octicons-react'
-import Image from 'next/image'
 
 const Navbar = () => {
   const { socket } = useStore()
@@ -165,9 +155,10 @@ function Index() {
     <React.Fragment>
       <Navbar />
       {/* <TopBar></TopBar> */}
-      <GameLibrary />
+
       <CreateRoom />
       <RoomSelector />
+      <GameLibrary />
     </React.Fragment>
   )
 }

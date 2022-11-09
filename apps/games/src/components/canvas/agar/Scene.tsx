@@ -15,7 +15,12 @@ import { Rig } from './Rig'
 
 export const Scene = ({}) => {
   const clock = useRef(0)
-  const store = useStore()
+  // const store = useStore()
+  // Get zustand store transiently
+  const storeRef = useRef(useStore.getState())
+  useEffect(() => useStore.subscribe((state) => (storeRef.current = state)), [])
+  let store = storeRef.current
+
   const room = store.room as GameRoomDto<Agar.EngineDto, Agar.PlayerDto>
 
   const { gl, scene, size, events, viewport } = useThree()
@@ -62,9 +67,9 @@ export const Scene = ({}) => {
         size: player.body.size,
       })
     }
-  }, [player, set, store.room.engine])
+  }, [player, set, room.engine])
 
-  if (store.room.engine && Object.keys(store.room.engine).length !== 0) {
+  if (room.engine && Object.keys(room.engine).length !== 0) {
     return (
       <>
         <Rig>
