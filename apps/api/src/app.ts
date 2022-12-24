@@ -40,28 +40,40 @@ app.ready((err) => {
   app.io.on('connection', (socket: Socket) => {
     socket.on(Events.JOIN_ROOM, (data: { roomId: string }) => {
       const gameRoom = gameRooms.get(data.roomId)
-      if (gameRoom) {
-        socket.join(data.roomId)
-        socket.emit(Events.JOINED_ROOM, gameRoom.serialize())
-      } else {
-        // TODO: Multiple game engines
+      // Create a game room and engine
+      if (!gameRoom) {
         const engine = new Agar.Engine()
         const gameRoom = new GameRoom(engine, data.roomId, app.io)
         gameRooms.set(gameRoom.name, gameRoom)
-        if (!gamePlayers.has(socket.id)) {
+      }
+      const room = gameRooms.get(data.roomId)
+      if (room) {
+        // Create a new player
+        if (!room.engine.hasPlayer(socket)) {
           const { x, y } = Agar.randomPosInMap()
           const player = new Agar.Player(generateName(), socket, x, y)
-          engine.addPlayer(socket, player)
+          room.engine.addPlayer(socket, player)
           gamePlayers.set(socket.id, player)
         }
         socket.join(data.roomId)
-        socket.emit(Events.JOINED_ROOM, gameRoom.serialize())
+        socket.emit(Events.JOINED_ROOM, room.serialize())
       }
     })
     socket.on(Events.INPUT, (data) => {
       const room = gameRooms.get(data.room.name)
       if (room) {
         room.engine.handleInput(socket, data)
+      }
+    })
+    socket.on(Events.LEAVE_ROOM, (data) => {
+      const room = gameRooms.get(data.room.name)
+      if (room) {
+        socket.leave(room.name)
+        // socket.disconnect()
+        room.engine.removePlayer(socket)
+        if (room.engine.players.size === 0) {
+          gameRooms.delete(room.name)
+        }
       }
     })
   })

@@ -15,8 +15,16 @@ export abstract class GameEngine<Player extends GamePlayer> {
     this.location = GameEngine.identifier
   }
 
+  addPlayer(socket: Socket, player: Player) {
+    this.players.set(socket.id, player)
+  }
+
   removePlayer(socket: Socket) {
     this.players.delete(socket.id)
+  }
+
+  hasPlayer(socket: Socket) {
+    return this.players.has(socket.id)
   }
 
   abstract handleInput(socket: Socket, data: any): void

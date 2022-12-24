@@ -2,11 +2,10 @@ import { emit, setupListners } from '@/helpers/socket'
 import { useStore } from '@/helpers/store'
 import { Physics } from '@react-three/cannon'
 import { Stats } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useThree } from '@react-three/fiber'
 import { Events, Agar, GameRoomDto } from 'interface'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
-import * as THREE from 'three'
 import Agars3D from './Agars3D'
 import Cells3D from './Cells3D'
 import { MouseMove, startCapturingInput, stopCapturingInput } from './controls'
@@ -38,6 +37,7 @@ export const Scene = ({}) => {
     return () => {
       // store.socket.off('connect')
       stopCapturingInput(handleMouseMove)
+      emit(store, Events.LEAVE_ROOM, {})
     }
   }, [])
 

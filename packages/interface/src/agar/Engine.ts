@@ -39,10 +39,6 @@ export class Engine extends GameEngine<Player> {
     this.agars = agarMap
   }
 
-  addPlayer(socket: Socket, player: Player) {
-    this.players.set(socket.id, player)
-  }
-
   update() {
     const now = Date.now()
     const dt = (now - this.lastUpdateTime) / 1000
