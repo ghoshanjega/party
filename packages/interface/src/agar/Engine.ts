@@ -62,6 +62,22 @@ export class Engine extends GameEngine<Player> {
         }
       }
     }
+    for (const [player1Id, player1] of this.players) {
+      for (const [player2Id, player2] of this.players) {
+        if (player1Id !== player2Id) {
+          if (player1.body.isOverlapping(player2.body)) {
+            // Eat the smaller player
+            if (player1.body.size > player2.body.size) {
+              player1.body.size += player2.body.size
+              this.players.delete(player2Id)
+            } else if (player1.body.size < player2.body.size) {
+              player2.body.size += player1.body.size
+              this.players.delete(player1Id)
+            }
+          }
+        }
+      }
+    }
   }
 
   handleInput(socket: Socket, data: { dir: number; speed: number }) {

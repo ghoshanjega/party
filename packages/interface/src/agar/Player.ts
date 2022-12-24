@@ -18,7 +18,7 @@ export class Player extends GamePlayer {
     super(socket, socket.id, username)
     this.score = 0
     this.createdAt = Date.now()
-    this.body = new Obj(socket.id, x, y, Math.random() * 2 * Math.PI, C.PLAYER_MIN_SPEED, C.PLAYER_START_SIZE, randomColor)
+    this.body = new Obj(socket.id, x, y, Math.random() * 2 * Math.PI, C.PLAYER_MIN_SPEED, C.PLAYER_START_SIZE, randomColor())
   }
 
   update(dt: number) {

@@ -57,6 +57,11 @@ export class Obj {
     return this.x - this.size < x && x < this.x + this.size && this.y - this.size < y && y < this.y + this.size
   }
 
+  isOverlapping(enemy: Obj) {
+    const [x1, y1, size1] = [enemy.x, enemy.y, enemy.size]
+    return Math.hypot(this.x - x1, this.y - y1) <= this.size + size1
+  }
+
   serialize(): ObjDto {
     return {
       id: this.id,
