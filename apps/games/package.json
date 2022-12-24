@@ -23,6 +23,7 @@
     "bootstrap": "^5.2.1",
     "glsl-random": "^0.0.5",
     "interface": "*",
+    "lamina": "^1.1.23",
     "leva": "^0.9.30",
     "logger": "*",
     "next": "^12.2.5",
@@ -50,9 +51,9 @@
     "raw-loader": "^4.0.2",
     "react-refresh": "0.10.0",
     "tailwindcss": "^3.1.6",
+    "tsconfig": "*",
     "typescript": "latest",
-    "url-loader": "^4.1.1",
-    "tsconfig": "*"
+    "url-loader": "^4.1.1"
   },
   "scripts": {
     "lint": "yarn prettier && yarn eslint",

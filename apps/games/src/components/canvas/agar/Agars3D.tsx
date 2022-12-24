@@ -1,6 +1,7 @@
 import { Instances } from '@react-three/drei'
 import { Agar } from 'interface'
 import React, { Fragment, useRef } from 'react'
+import { Color } from 'three'
 import Agar3D from './Agar3D'
 
 const Agars3D = ({ agars }: { agars: { [key: string]: Agar.AgarDto } }) => {
@@ -17,7 +18,7 @@ const Agars3D = ({ agars }: { agars: { [key: string]: Agar.AgarDto } }) => {
         position={[0, 10, 0]}
       >
         <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial roughness={0} color='#f0f0f0' />
+        <meshStandardMaterial roughness={0} color={'#ff5555'} />
         {agarsArray.map((agar, i) => (
           <Agar3D key={i} agar={agar} />
         ))}

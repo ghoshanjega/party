@@ -30,6 +30,9 @@ export class Player extends GamePlayer {
     // Make sure the player stays in bounds
     this.body.x = Math.max(0, Math.min(C.MAP_SIZE, this.body.x))
     this.body.y = Math.max(0, Math.min(C.MAP_SIZE, this.body.y))
+
+    // Make sure the player stays in size bound
+    this.body.size = Math.max(C.PLAYER_START_SIZE, Math.min(C.PLAYER_MAX_SIZE, this.body.size))
   }
 
   serialize(): PlayerDto {
