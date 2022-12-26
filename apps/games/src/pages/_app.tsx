@@ -6,7 +6,7 @@ import Dom from '@/components/layout/dom'
 import dynamic from 'next/dynamic'
 import { AppProps } from 'next/app'
 import { setupListners } from '@/helpers/socket'
-import { ThemeProvider } from '@primer/react'
+import { SSRProvider, ThemeProvider } from '@primer/react'
 
 import '@/styles/index.css'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -63,15 +63,17 @@ function App({
     useStore.setState({ router })
   }, [router])
   return (
-    <ThemeProvider>
-      <Header title={pageProps.title} />
-      <Dom>
-        <Component {...pageProps} />
-      </Dom>
-      {store.room && (Component as any)?.r3f && (
-        <LCanvas>{(Component as any).r3f()}</LCanvas>
-      )}
-    </ThemeProvider>
+    <SSRProvider>
+      <ThemeProvider>
+        <Header title={pageProps.title} />
+        <Dom>
+          <Component {...pageProps} />
+        </Dom>
+        {store.room && (Component as any)?.r3f && (
+          <LCanvas>{(Component as any).r3f()}</LCanvas>
+        )}
+      </ThemeProvider>
+    </SSRProvider>
   )
 }
 

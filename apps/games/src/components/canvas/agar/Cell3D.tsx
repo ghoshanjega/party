@@ -1,9 +1,11 @@
 import { useHelper } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { Agar } from 'interface'
-import React, { createRef, useState } from 'react'
+import React, { createRef, useEffect, useState } from 'react'
 import * as THREE from 'three'
 import { SpotLightHelper } from 'three'
+
+const lightHoverDistance = new THREE.Vector3(0, 0, 100)
 
 const Cell3D = ({ player }: { player: Agar.Player }): JSX.Element => {
   // This reference will give us direct access to the mesh
@@ -13,33 +15,13 @@ const Cell3D = ({ player }: { player: Agar.Player }): JSX.Element => {
   // const [hovered, setHover] = useState(false)
   // const [active, setActive] = useState(false)
   const s = player.body.size
-  const position = new THREE.Vector3(player.body.x, player.body.y, 0)
-  // const direction = new THREE.Vector3(
-  //   Math.sin(player.body.direction) * Agar.C.MAP_SIZE,
-  //   Math.cos(player.body.direction) * Agar.C.MAP_SIZE,
-  //   0
-  // )
-  const direction = new THREE.Vector3(1000, 1000, 0)
 
-  useFrame(({ mouse, viewport }) => {
+  useFrame(({}) => {
     if (mesh.current) {
+      const position = new THREE.Vector3(player.body.x, player.body.y, 0)
       mesh.current.position.lerp(position, 0.1)
-      // mesh.current.rotateZ(player.body.direction)
-      // mesh.current.attach(spotLight.current!)
-    }
-    if (spotLight.current) {
-      const x = mouse.x * viewport.width
-      const y = mouse.y * viewport.height
-      // console.log('xy', x, y)
-      spotLight.current.position.lerp(position, 0.1)
-      // spotLight.current.target =new THREE.Vector3(x, y, 0)
-      // spotLight.current.lookAt(direction)
-      // const quaternion = new THREE.Quaternion()
-      // quaternion.setFromAxisAngle(position, Math.PI / 2)
-      // spotLight.current.setRotationFromQuaternion(quaternion)
     }
   })
-  useHelper(spotLight, SpotLightHelper, 'cyan')
 
   return (
     <>
@@ -51,10 +33,9 @@ const Cell3D = ({ player }: { player: Agar.Player }): JSX.Element => {
         // onPointerOut={(event) => setHover(false)}
       >
         <sphereGeometry args={[s, 64, 32]} />
-        <meshPhongMaterial emissive={player.body.color} />
-        <pointLight distance={player.body.size * 5} color={'#f1fa8c'} />
+        <meshStandardMaterial color={player.body.color} />
+        {/* <pointLight distance={player.body.size * 5} color={'#f1fa8c'} /> */}
       </mesh>
-      {/* <spotLight intensity={1} angle={0.3} ref={spotLight} /> */}
     </>
   )
 }

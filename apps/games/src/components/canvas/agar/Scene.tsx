@@ -46,11 +46,11 @@ export const Scene = ({}) => {
   const [{}, set] = useControls(() => ({
     name: { value: 'default', editable: false },
     score: { value: 0, editable: false },
-    direction: { value: 0, editable: false },
+
     x: { value: 0, editable: false },
     y: { value: 0, editable: false },
-    speed: { value: 0, editable: false },
-    agarCount: { value: 0, editable: false },
+    // direction: { value: 0, editable: false },
+    // speed: { value: 0, editable: false },
     size: { value: 0, editable: false },
     // join: button(() => joinGame(socket, 'newGuy'))
   }))
@@ -61,15 +61,15 @@ export const Scene = ({}) => {
         name: player.username,
         x: player.body.x,
         y: player.body.y,
-        direction: player.body.direction,
+        // direction: player.body.direction,
         score: player.score,
-        speed: player.body.speed,
+        // speed: player.body.speed,
         size: player.body.size,
       })
     }
   }, [player, set, room.engine])
 
-  if (room.engine && Object.keys(room.engine).length !== 0) {
+  if (room.engine && Object.keys(room.engine).length !== 0 && player) {
     return (
       <>
         <Rig>
