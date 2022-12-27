@@ -1,11 +1,12 @@
 import { emit, setupListners } from '@/helpers/socket'
 import { useStore } from '@/helpers/store'
 import { Physics } from '@react-three/cannon'
-import { Stats } from '@react-three/drei'
+import { Stars, Stats } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { Events, Agar, GameRoomDto } from 'interface'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
+import * as THREE from 'three'
 import Agars3D from './Agars3D'
 import Cells3D from './Cells3D'
 import { MouseMove, startCapturingInput, stopCapturingInput } from './controls'
@@ -13,9 +14,7 @@ import { calcDirection, getPlayer, calcSpeed } from './logic'
 import { Rig } from './Rig'
 
 export const Scene = ({}) => {
-  const clock = useRef(0)
-  // const store = useStore()
-  // Get zustand store transiently
+  // Get zustand store transiently to reduce render
   const storeRef = useRef(useStore.getState())
   useEffect(() => useStore.subscribe((state) => (storeRef.current = state)), [])
   let store = storeRef.current
@@ -32,10 +31,8 @@ export const Scene = ({}) => {
   }
 
   useEffect(() => {
-    // setupListners(store, useStore.setState, router);
     startCapturingInput(handleMouseMove)
     return () => {
-      // store.socket.off('connect')
       stopCapturingInput(handleMouseMove)
       emit(store, Events.LEAVE_ROOM, {})
     }
@@ -73,11 +70,21 @@ export const Scene = ({}) => {
     return (
       <>
         <Rig>
+          <color attach='background' args={['#000000']} />
           <Stats showPanel={0} className='stats' />
           <Physics iterations={1}>
             <Agars3D agars={room.engine.agars} />
             <Cells3D players={room.engine.players} />
           </Physics>
+          <Stars
+            radius={100}
+            depth={Agar.C.MAP_SIZE / 2}
+            count={5000}
+            factor={40}
+            saturation={1}
+            fade
+            speed={1}
+          />
         </Rig>
       </>
     )

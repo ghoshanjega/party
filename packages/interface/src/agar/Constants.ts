@@ -17,4 +17,6 @@ export const C = {
   SCORE_PER_SECOND: 1,
 
   MAP_SIZE: 3000,
+
+  UPDATES_PER_SECOND: 20,
 }

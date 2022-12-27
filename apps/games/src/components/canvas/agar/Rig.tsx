@@ -18,7 +18,7 @@ function Lights({ player }: { player: Agar.Player }) {
   const { scene, camera } = useThree()
 
   useEffect(() => {
-    const spot = new THREE.SpotLight('#f1fa8c', undefined, undefined, 0.2)
+    const spot = new THREE.SpotLight('#ffffff', 0.5, undefined, 0.2, 0.5)
     camera.add(spot)
     scene.add(spot.target)
   }, [camera, scene])
@@ -58,7 +58,7 @@ export const Rig = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <PerspectiveCamera makeDefault zoom={1} args={[]} near={10} far={3000} />
-      <color attach='background' args={['#282a36']} />
+
       {/* <fog attach='fog' near={0} far={10000} color={'white'} /> */}
       <Lights player={player} />
       {children}

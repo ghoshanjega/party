@@ -1,8 +1,8 @@
 import { C } from './Constants'
 
 export const randomPosInMap = () => {
-  const x = Math.floor(Math.random() * C.MAP_SIZE)
-  const y = Math.floor(Math.random() * C.MAP_SIZE)
+  const x = Math.floor(Math.random() * C.MAP_SIZE) - C.MAP_SIZE / 2
+  const y = Math.floor(Math.random() * C.MAP_SIZE) - C.MAP_SIZE / 2
   return { x, y }
 }
 
