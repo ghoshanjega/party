@@ -70,7 +70,7 @@ app.ready((err) => {
       if (room) {
         socket.leave(room.name)
         // socket.disconnect()
-        room.engine.removePlayer(socket)
+        room.engine.removePlayer(socket.id)
         if (room.engine.players.size === 0) {
           gameRooms.delete(room.name)
         }

@@ -1,21 +1,12 @@
-import { emit, setupListners } from '@/helpers/socket'
 import { useStore } from '@/helpers/store'
 import { Physics } from '@react-three/cannon'
 import { Stars, Stats } from '@react-three/drei'
-import { useThree } from '@react-three/fiber'
-import { Events, Agar, GameRoomDto } from 'interface'
+import { Agar, GameRoomDto } from 'interface'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
-import * as THREE from 'three'
 import Agars3D from './Agars3D'
 import Cells3D from './Cells3D'
-import {
-  MouseMove,
-  startCapturingInput,
-  stopCapturingInput,
-  TouchMove,
-} from './controls'
-import { calcDirection, getPlayer, calcSpeed } from './logic'
+import { getPlayer } from './logic'
 import { Rig } from './Rig'
 import { useUserInputs } from './useUserInputs'
 

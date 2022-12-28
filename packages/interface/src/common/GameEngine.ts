@@ -19,8 +19,8 @@ export abstract class GameEngine<Player extends GamePlayer> {
     this.players.set(socket.id, player)
   }
 
-  removePlayer(socket: Socket) {
-    this.players.delete(socket.id)
+  removePlayer(playerId: string) {
+    this.players.delete(playerId)
   }
 
   hasPlayer(socket: Socket) {

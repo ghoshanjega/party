@@ -43,11 +43,7 @@ export class Engine extends GameEngine<Player> {
     const now = Date.now()
     const dt = (now - this.lastUpdateTime) / 1000
     this.lastUpdateTime = now
-    for (const [playerId, player] of this.players) {
-      if (player) {
-        player.update(dt)
-      }
-    }
+
     for (const [agarId, agar] of this.agars) {
       for (const [playerId, player] of this.players) {
         if (agar && player.body.isWithinRadius(agar.x, agar.y)) {
@@ -69,13 +65,18 @@ export class Engine extends GameEngine<Player> {
             // Eat the smaller player
             if (player1.body.size > player2.body.size) {
               player1.body.size += player2.body.size
-              this.players.delete(player2Id)
+              this.removePlayer(player2Id)
             } else if (player1.body.size < player2.body.size) {
               player2.body.size += player1.body.size
-              this.players.delete(player1Id)
+              this.removePlayer(player1Id)
             }
           }
         }
+      }
+    }
+    for (const [playerId, player] of this.players) {
+      if (player) {
+        player.update(dt)
       }
     }
   }
