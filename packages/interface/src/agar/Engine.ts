@@ -16,15 +16,13 @@ export class Engine extends GameEngine<Player> {
   static identifier = 'agar'
   agars: Agars
   lastUpdateTime: number
-  shouldSendUpdate: boolean
 
   constructor() {
     super()
     this.location = Engine.identifier
     this.agars = new Map()
     this.lastUpdateTime = Date.now()
-    this.shouldSendUpdate = false
-    setInterval(this.update.bind(this), 1000 / C.UPDATES_PER_SECOND)
+    this.updateInterval = setInterval(this.update.bind(this), 1000 / C.UPDATES_PER_SECOND)
     this.initialize()
   }
 

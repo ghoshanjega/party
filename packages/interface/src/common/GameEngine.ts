@@ -10,9 +10,14 @@ export abstract class GameEngine<Player extends GamePlayer> {
   static identifier = 'lobby'
   location: string
   players: GamePlayers<Player>
+  updateInterval: NodeJS.Timer | undefined
   constructor() {
     this.players = new Map()
     this.location = GameEngine.identifier
+  }
+
+  clearUpdateInterval() {
+    this.updateInterval && clearInterval(this.updateInterval)
   }
 
   addPlayer(socket: Socket, player: Player) {

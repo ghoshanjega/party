@@ -8,4 +8,5 @@ export const Events = {
   GAME_OVER: 'dead',
   GET_GAME_STATE: 'get_game_state',
   GAME_STATE: 'game_state',
+  GAME_SESSION_EXPIRED: 'game_session_expired',
 }

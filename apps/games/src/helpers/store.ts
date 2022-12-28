@@ -22,21 +22,6 @@ export interface StoreState {
   joined: boolean
 }
 
-// const useStoreImpl = create<StoreState>(() => {
-//   return {
-//     router: null,
-//     dom: null,
-//   }
-// })
-
-// const useStore = (set) => useStoreImpl(set, shallow)
-// Object.assign(useStore, useStoreImpl)
-
-// const { getState, setState } = useStoreImpl
-
-// export { getState, setState }
-// export default useStore
-
 export const useStore = create<StoreState>((set, shallow) => ({
   // @ts-ignore
   dom: null,
