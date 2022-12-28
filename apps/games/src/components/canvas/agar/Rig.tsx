@@ -26,7 +26,6 @@ function Lights({ player }: { player: Agar.Player }) {
   useFrame(() => {
     // @ts-ignore
     const spot: THREE.SpotLight = camera.children.find((r) => r.isSpotLight)
-    console.log('spot', spot)
     const playerPosition = new THREE.Vector3(player.body.x, player.body.y, 0)
     spot.target.position.lerp(playerPosition, 0.1)
   })

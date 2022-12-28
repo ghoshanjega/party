@@ -9,36 +9,27 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import Agars3D from './Agars3D'
 import Cells3D from './Cells3D'
-import { MouseMove, startCapturingInput, stopCapturingInput } from './controls'
+import {
+  MouseMove,
+  startCapturingInput,
+  stopCapturingInput,
+  TouchMove,
+} from './controls'
 import { calcDirection, getPlayer, calcSpeed } from './logic'
 import { Rig } from './Rig'
+import { useUserInputs } from './useUserInputs'
 
 export const Scene = ({}) => {
   // Get zustand store transiently to reduce render
   const storeRef = useRef(useStore.getState())
   useEffect(() => useStore.subscribe((state) => (storeRef.current = state)), [])
-  let store = storeRef.current
+  const store = storeRef.current
 
   const room = store.room as GameRoomDto<Agar.EngineDto, Agar.PlayerDto>
 
-  const { gl, scene, size, events, viewport } = useThree()
-
-  const handleMouseMove: MouseMove = (e) => {
-    emit(store, Events.INPUT, {
-      dir: calcDirection(e.clientX, e.clientY),
-      speed: calcSpeed(e.clientX, e.clientY, viewport),
-    })
-  }
-
-  useEffect(() => {
-    startCapturingInput(handleMouseMove)
-    return () => {
-      stopCapturingInput(handleMouseMove)
-      emit(store, Events.LEAVE_ROOM, {})
-    }
-  }, [])
-
   const player = getPlayer<Agar.Player>(room.engine, store.socket.id)
+
+  useUserInputs()
 
   const [{}, set] = useControls(() => ({
     name: { value: 'default', editable: false },
