@@ -25,28 +25,29 @@ export const Scene = ({}) => {
   const [{}, set] = useControls(() => ({
     name: { value: 'default', editable: false },
     score: { value: 0, editable: false },
-
-    x: { value: 0, editable: false },
-    y: { value: 0, editable: false },
+    // x: { value: 0, editable: false },
+    // y: { value: 0, editable: false },
     // direction: { value: 0, editable: false },
     // speed: { value: 0, editable: false },
-    size: { value: 0, editable: false },
+    // size: { value: 0, editable: false },
     // join: button(() => joinGame(socket, 'newGuy'))
+    completed: { value: 0, min: 0, max: 100, step: 1, editable: false },
   }))
 
   useEffect(() => {
     if (player) {
       set({
         name: player.username,
-        x: player.body.x,
-        y: player.body.y,
+        // x: player.body.x,
+        // y: player.body.y,
         // direction: player.body.direction,
         score: player.score,
         // speed: player.body.speed,
-        size: player.body.size,
+        // size: player.body.size,
+        completed: room.completed,
       })
     }
-  }, [player, set, room.engine])
+  }, [player, set, room.completed])
 
   if (room.engine && Object.keys(room.engine).length !== 0 && player) {
     return (

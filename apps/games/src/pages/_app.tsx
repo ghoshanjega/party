@@ -55,10 +55,6 @@ function App({
     }
   }, [router, store, store.socket])
 
-  // useEffect(() => {
-  //   setupListners(store, useStore.setState, router)
-  // }, [])
-
   useEffect(() => {
     useStore.setState({ router })
   }, [router])

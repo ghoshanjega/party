@@ -12,7 +12,7 @@ export abstract class GamePlayer {
   id: string
   username: string
   socket: Socket
-
+  ready: boolean = false
   constructor(socket: Socket, id: string, username: string) {
     ;[this.id, this.socket, this.username] = [id, socket, username]
   }

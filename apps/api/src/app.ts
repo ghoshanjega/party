@@ -43,7 +43,7 @@ app.ready((err) => {
       // Create a game room and engine
       if (!gameRoom) {
         const engine = new Agar.Engine()
-        const gameRoom = new GameRoom(engine, data.roomId, app.io)
+        const gameRoom = new GameRoom(engine, data.roomId, app.io, 60000)
         gameRooms.set(gameRoom.name, gameRoom)
       }
       const room = gameRooms.get(data.roomId)
