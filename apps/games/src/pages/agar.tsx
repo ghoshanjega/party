@@ -12,11 +12,11 @@ const Scene = dynamic(() => import('@/components/canvas/agar/Scene'), {
 })
 
 const Page = () => {
-  const storeRef = useRef(useStore.getState())
-  useEffect(() => useStore.subscribe((state) => (storeRef.current = state)), [])
-  const store = storeRef.current
-  const room = store.room as GameRoomDto<Agar.EngineDto, Agar.PlayerDto>
-  const player = getPlayer<Agar.Player>(room.engine, store.socket.id)
+  // const storeRef = useRef(useStore.getState())
+  // useEffect(() => useStore.subscribe((state) => (storeRef.current = state)), [])
+  // const store = storeRef.current
+  // const room = store.room as GameRoomDto<Agar.EngineDto, Agar.PlayerDto>
+  // const player = getPlayer<Agar.Player>(room.engine, store.socket.id)
 
   return (
     <>
