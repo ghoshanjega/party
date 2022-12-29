@@ -42,6 +42,7 @@ COPY --from=installer /app/apps/games/package.json ./apps/games/
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=installer --chown=nextjs:nodejs /app/apps/games/.next/standalone ./apps/games/
 COPY --from=installer --chown=nextjs:nodejs /app/apps/games/.next/static ./apps/games/.next/static
+COPY --from=installer --chown=nextjs:nodejs /app/apps/games/public ./apps/games/public
 
 ENV PORT=3005
 EXPOSE 3005
