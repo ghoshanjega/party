@@ -10,6 +10,7 @@ RUN turbo prune --scope=api --docker
 # Add lockfile and package.json's of isolated subworkspace
 FROM node:16-alpine AS installer
 RUN apk update
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # First install dependencies (as they change less often)
