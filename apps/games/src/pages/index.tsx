@@ -19,7 +19,7 @@ import { PersonIcon, StarFillIcon } from '@primer/octicons-react'
 const Navbar = () => {
   const { socket } = useStore()
   return (
-    <Header>
+    <div className='navbar'>
       <Header.Item>
         <Header.Link href='#'>
           <StyledOcticon icon={StarFillIcon} size={32} sx={{ mr: 2 }} />
@@ -35,7 +35,7 @@ const Navbar = () => {
           alt='@octocat'
         />
       </Header.Item> */}
-    </Header>
+    </div>
   )
 }
 
@@ -50,12 +50,12 @@ const RoomSelector = () => {
   if (rooms) {
     return (
       <Box
-        borderColor='border.default'
-        borderWidth={1}
-        borderStyle='solid'
+        // borderColor='border.default'
+        // borderWidth={1}
+        // borderStyle='solid'
         p={3}
       >
-        <Label>Join room</Label>
+        <Label variant='success'>Join room</Label>
         <Box display='flex'>
           {Object.entries(rooms).map(([key, room]) => (
             <Box p={3} key={key}>
@@ -93,14 +93,8 @@ const CreateRoom = () => {
   }
 
   return (
-    <Box
-      borderColor='border.default'
-      borderWidth={1}
-      borderStyle='solid'
-      p={3}
-      // height={'300px'}
-    >
-      <Label>Create room</Label>
+    <Box p={3}>
+      <Label variant='success'>Create room</Label>
       <div className='p-3'>
         <FormControl>
           <FormControl.Label>Room name</FormControl.Label>
@@ -115,34 +109,35 @@ const CreateRoom = () => {
 }
 const games = {
   agar: {
-    label: 'Agar',
-    image: '/img/agar.png',
+    label: 'Space Junkies',
+    image: '/img/spaceJunkies.png',
   },
 }
 
 const GameLibrary = () => {
   return (
-    <Box
-      borderColor='border.default'
-      borderWidth={1}
-      borderStyle='solid'
-      p={3}
-      // height={'300px'}
-    >
-      <Label>Game Library</Label>
-      <Box display='flex'>
+    <Box p={3}>
+      <Label variant='success'>Game Library</Label>
+      <Box display='flex' p={3}>
         {Object.entries(games).map(([key, game]) => (
-          <Box p={3} key={key}>
-            <div
-              style={{
-                width: '150px',
-                height: '200px',
-              }}
-              className={`d-flex flex-column justify-content-center 
-                align-items-center rounded-2 bg-dark bg-gradient`}
+          <Box
+            // p={3}
+            style={{
+              width: '450px',
+              height: '200px',
+              backgroundImage: `url(${game.image})`,
+              cursor: 'pointer',
+              opacity: '0.9',
+            }}
+            className={`d-flex rounded-2 align-items-start`}
+            key={key}
+          >
+            <span
+              className='d-inline-flex badge  text-white text-wrap fs-3 '
+              style={{ textShadow: '4px 4px 10px rgba(0,0,0,0.9)' }}
             >
-              <span className='badge text-wrap fs-3'>{game.label}</span>
-            </div>
+              {game.label}
+            </span>
           </Box>
         ))}
       </Box>

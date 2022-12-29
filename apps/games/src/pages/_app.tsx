@@ -61,7 +61,7 @@ function App({
   }, [router])
   return (
     <SSRProvider>
-      <ThemeProvider>
+      <ThemeProvider colorMode='dark'>
         <Header title={pageProps.title} />
         <Dom>
           <Component {...pageProps} />
