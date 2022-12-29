@@ -29,7 +29,13 @@ app.get('/ping', async (request, reply) => {
 
 app.get('/rooms', async (request, reply) => {
   const rooms: GameRoomsDto<GameEngineDto<GamePlayerDto>, GamePlayerDto> = {
-    rooms: Object.fromEntries(new Map(Array.from(gameRooms).map(([key, value]) => [key, { name: value.name, engine: value.engine.serialize() }]))),
+    rooms: Object.fromEntries(
+      new Map(
+        Array.from(gameRooms)
+          .filter(([key, value]) => value.active)
+          .map(([key, value]) => [key, { name: value.name, engine: value.engine.serialize() }])
+      )
+    ),
   }
   reply.send(rooms)
 })

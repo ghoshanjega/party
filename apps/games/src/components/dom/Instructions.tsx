@@ -1,11 +1,9 @@
+import { useStore } from '@/helpers/store'
+import React, { useState } from 'react'
 
-import { useStore } from "@/helpers/store"
-import { useState } from "react"
-
-export default function Instructions() {
-  const { socket } = useStore()
-  const [userName, setUserName] = useState("")
-
+export const Instructions = ({ children }: { children: React.ReactNode }) => {
+  // const { socket } = useStore()
+  // const [userName, setUserName] = useState('')
 
   return (
     <div
@@ -14,7 +12,7 @@ export default function Instructions() {
         maxWidth: 'calc(100% - 28px)',
       }}
     >
-
+      <p className='hidden mb-8 md:block'>{children}</p>
     </div>
   )
 }

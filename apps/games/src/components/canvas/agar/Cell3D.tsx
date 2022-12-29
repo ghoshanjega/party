@@ -1,9 +1,7 @@
-import { useHelper } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { Agar } from 'interface'
-import React, { createRef, useEffect, useState } from 'react'
+import React, { createRef } from 'react'
 import * as THREE from 'three'
-import { SpotLightHelper } from 'three'
 
 const lightHoverDistance = new THREE.Vector3(0, 0, 100)
 

@@ -2,7 +2,7 @@ import { useStore } from '@/helpers/store'
 import { Physics } from '@react-three/cannon'
 import { Stars, Stats } from '@react-three/drei'
 import { Agar, GameRoomDto } from 'interface'
-import { useControls } from 'leva'
+import { Leva, useControls } from 'leva'
 import { useEffect, useRef } from 'react'
 import Agars3D from './Agars3D'
 import Cells3D from './Cells3D'
@@ -23,28 +23,28 @@ export const Scene = ({}) => {
   useUserInputs()
 
   const [{}, set] = useControls(() => ({
-    name: { value: 'default', editable: false },
-    score: { value: 0, editable: false },
+    Name: { value: 'default', editable: false },
+    Score: { value: player ? player.score : 0, editable: false },
     // x: { value: 0, editable: false },
     // y: { value: 0, editable: false },
     // direction: { value: 0, editable: false },
     // speed: { value: 0, editable: false },
     // size: { value: 0, editable: false },
     // join: button(() => joinGame(socket, 'newGuy'))
-    completed: { value: 0, min: 0, max: 100, step: 1, editable: false },
+    Time: { value: 0, min: 0, max: 100, step: 1, editable: false },
   }))
 
   useEffect(() => {
     if (player) {
       set({
-        name: player.username,
+        Name: player.username,
         // x: player.body.x,
         // y: player.body.y,
         // direction: player.body.direction,
-        score: player.score,
+        // Score: player.score,
         // speed: player.body.speed,
         // size: player.body.size,
-        completed: room.completed,
+        Time: room.completed,
       })
     }
   }, [player, set, room.completed])
@@ -54,7 +54,7 @@ export const Scene = ({}) => {
       <>
         <Rig>
           <color attach='background' args={['#000000']} />
-          <Stats showPanel={0} className='stats' />
+          {/* <Stats showPanel={0} className='stats' /> */}
           <Physics iterations={1}>
             <Agars3D agars={room.engine.agars} />
             <Cells3D players={room.engine.players} />

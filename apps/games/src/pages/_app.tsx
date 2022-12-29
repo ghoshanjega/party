@@ -10,9 +10,10 @@ import { SSRProvider, ThemeProvider } from '@primer/react'
 
 import '@/styles/index.css'
 import 'bootstrap/dist/css/bootstrap.css'
+import { Loader } from '@react-three/drei'
 
 const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
-  loading: () => <>loading</>,
+  loading: () => <Loader />,
   ssr: true,
 })
 
