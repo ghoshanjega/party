@@ -19,6 +19,4 @@ export const C = {
   MAP_SIZE: 3000,
 
   UPDATES_PER_SECOND: 20,
-
-  NAME: 'Space Junkies',
 }

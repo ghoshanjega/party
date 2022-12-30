@@ -3,10 +3,12 @@ import { GameEngine, GameEngineDto } from './GameEngine'
 import { Events } from './GameEvents'
 import { GamePlayer, GamePlayerDto } from './GamePlayer'
 
+type GameRoomState = 'lobby' | 'start' | 'end'
 export interface GameRoomDto<EngineDto extends GameEngineDto<PlayerDto>, PlayerDto extends GamePlayerDto> {
   name: string
   engine: EngineDto
   completed: number
+  state: GameRoomState
 }
 
 export interface GameRoomsDto<EngineDto extends GameEngineDto<PlayerDto>, PlayerDto extends GamePlayerDto> {
@@ -19,29 +21,43 @@ export class GameRoom<Player extends GamePlayer> {
   io: Server
   active: boolean = true
   emitInterval: NodeJS.Timer
-  timeout: NodeJS.Timeout
-  createdAt: number
+  timeout: NodeJS.Timeout | undefined
+  startedAt: number
   ttl: number
+  state: GameRoomState
 
   constructor(engine: GameEngine<Player>, name: string, io: Server, ttl: number) {
-    this.createdAt = Date.now()
+    this.startedAt = Date.now()
     this.engine = engine
     this.name = name
     this.io = io
-    this.emitInterval = setInterval(this.emitState.bind(this), 1000 / 6) // TODO: updates per second
-    ;(this.timeout = this.killSession(ttl)), (this.ttl = ttl)
+    this.state = 'lobby'
+    // initially emit slowly
+    this.emitInterval = setInterval(this.emitStateToRoomMates.bind(this), 1000 / 1)
+    this.ttl = ttl
   }
 
-  emitState() {
+  startSession() {
+    this.startedAt = Date.now()
+    clearInterval(this.emitInterval)
+    this.state = 'start'
+    this.io.to(this.name).emit(Events.GO_TO_GAME, this.serialize())
+    this.engine.startUpdateInterval()
+    this.emitInterval = setInterval(this.emitStateToRoomMates.bind(this), 1000 / 6)
+    this.timeout = this.killSession(this.ttl)
+  }
+
+  emitStateToRoomMates() {
     this.io.to(this.name).emit(Events.GAME_STATE, this.serialize())
   }
 
   killSession(ttl: number) {
     return setTimeout(() => {
       clearInterval(this.emitInterval)
-      this.engine.clearUpdateInterval()
+      this.engine.killEngine()
       this.io.to(this.name).emit(Events.GAME_OVER, this.serialize())
       this.active = false
+      this.state = 'end'
     }, ttl)
   }
 
@@ -49,7 +65,8 @@ export class GameRoom<Player extends GamePlayer> {
     return {
       name: this.name,
       engine: this.engine.serialize(),
-      completed: getCompletedPercentage(this.createdAt, this.ttl),
+      completed: getCompletedPercentage(this.startedAt, this.ttl),
+      state: this.state,
     }
   }
 }

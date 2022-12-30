@@ -1,4 +1,6 @@
 export const Events = {
+  CREATE_AND_JOIN_ROOM: 'create_and_join_room',
+  CREATED_AND_JOINED_ROOM: 'created_and_joined_room',
   JOIN_ROOM: 'join_room',
   LEAVE_ROOM: 'leave_room',
   JOIN_GAME: 'join_game',
@@ -9,4 +11,7 @@ export const Events = {
   GET_GAME_STATE: 'get_game_state',
   GAME_STATE: 'game_state',
   GAME_SESSION_EXPIRED: 'game_session_expired',
+  READY: 'ready',
+  START: 'start',
+  GO_TO_GAME: 'go_to_game',
 }

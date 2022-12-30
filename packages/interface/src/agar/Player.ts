@@ -8,7 +8,6 @@ export interface PlayerDto extends GamePlayerDto {
   score: number
   body: ObjDto
   createdAt: number
-  ready: boolean
 }
 
 export class Player extends GamePlayer {
@@ -36,6 +35,11 @@ export class Player extends GamePlayer {
     this.body.size = Math.max(C.PLAYER_START_SIZE, Math.min(C.PLAYER_MAX_SIZE, this.body.size))
   }
 
+  isLeaderAndReady() {
+    this.isLeader = true
+    this.ready = true
+  }
+
   serialize(): PlayerDto {
     return {
       body: this.body.serialize(),
@@ -44,6 +48,7 @@ export class Player extends GamePlayer {
       score: this.score,
       username: this.username,
       ready: this.ready,
+      isLeader: this.isLeader,
     }
   }
 }

@@ -4,20 +4,30 @@ import { GamePlayer, GamePlayers } from './GamePlayer'
 export interface GameEngineDto<PlayerDto> {
   location: string
   players: { [key: string]: PlayerDto }
+  label: string
+  identifier: string
 }
 
 export abstract class GameEngine<Player extends GamePlayer> {
+  static label = 'lobby'
   static identifier = 'lobby'
   location: string
   players: GamePlayers<Player>
   updateInterval: NodeJS.Timer | undefined
+  active: boolean = true
   constructor() {
     this.players = new Map()
     this.location = GameEngine.identifier
   }
 
-  clearUpdateInterval() {
-    this.updateInterval && clearInterval(this.updateInterval)
+  abstract update(): void
+
+  abstract handleInput(socket: Socket, data: any): void
+
+  abstract serialize(): any
+
+  killEngine() {
+    this.active = false
   }
 
   addPlayer(socket: Socket, player: Player) {
@@ -32,7 +42,14 @@ export abstract class GameEngine<Player extends GamePlayer> {
     return this.players.has(socket.id)
   }
 
-  abstract handleInput(socket: Socket, data: any): void
+  readyPlayer(socket: Socket) {
+    const player = this.players.get(socket.id) as Player
+    if (player) {
+      player.ready = true
+    }
+  }
 
-  abstract serialize(): any
+  startUpdateInterval() {
+    this.update()
+  }
 }

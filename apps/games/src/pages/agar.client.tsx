@@ -1,6 +1,6 @@
 import { getPlayer } from '@/components/canvas/agar/logic'
 import { Instructions } from '@/components/dom/Instructions'
-import { useStore } from '@/helpers/store'
+import { StoreState, useStore } from '@/helpers/store'
 import { Label } from '@primer/react'
 import { Agar, GameRoomDto } from 'interface'
 import { Leva } from 'leva'
@@ -20,16 +20,16 @@ const Page = () => {
 
   return (
     <>
-      <Instructions>
+      {/* <Instructions>
         Collect all the trash before the other pirates. Watchout for any This is
         a minimal starter for Nextjs + React-three-fiber and Threejs. Click on
         the <span className='text-cyan-200'>atoms nucleus</span> to navigate to
         the <span className='text-green-200'>/blob</span> page. OrbitControls
         are enabled by default.
-      </Instructions>
+      </Instructions> */}
       <Leva
         titleBar={{
-          title: <Label variant='success'>{Agar.C.NAME}</Label>,
+          title: <Label variant='success'>Party</Label>,
           filter: false,
         }}
       />

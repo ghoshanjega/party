@@ -32,7 +32,22 @@ export const setupListners = (
     }
   )
   store.socket.on(
+    Events.CREATED_AND_JOINED_ROOM,
+    (room: GameRoomDto<GameEngineDto<GamePlayerDto>, GamePlayerDto>) => {
+      setState({ room: room })
+    }
+  )
+  store.socket.on(
     Events.JOINED_ROOM,
+    (room: GameRoomDto<GameEngineDto<GamePlayerDto>, GamePlayerDto>) => {
+      setState({ room: room })
+      // if (room.engine.location !== GameEngine.identifier) {
+      //   router.push(room.engine.location)
+      // }
+    }
+  )
+  store.socket.on(
+    Events.GO_TO_GAME,
     (room: GameRoomDto<GameEngineDto<GamePlayerDto>, GamePlayerDto>) => {
       setState({ room: room })
       if (room.engine.location !== GameEngine.identifier) {

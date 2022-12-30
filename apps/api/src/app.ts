@@ -5,6 +5,7 @@ import socketioServer from 'fastify-socket.io'
 import { GameRoom, Agar, Events, GamePlayer, GameRoomsDto, GameEngineDto, GamePlayerDto } from 'interface'
 import { Socket } from 'socket.io'
 import { generateName } from './utils/player.js'
+import { generateRoomName } from './utils/room.js'
 
 const app = fastify({ logger: false })
 await app.register(cors, {
@@ -44,14 +45,34 @@ app.get('/rooms', async (request, reply) => {
 app.ready((err) => {
   if (err) throw err
   app.io.on('connection', (socket: Socket) => {
-    socket.on(Events.JOIN_ROOM, (data: { roomId: string }) => {
-      const gameRoom = gameRooms.get(data.roomId)
-      // Create a game room and engine
-      if (!gameRoom) {
-        const engine = new Agar.Engine()
-        const gameRoom = new GameRoom(engine, data.roomId, app.io, 60000)
-        gameRooms.set(gameRoom.name, gameRoom)
+    socket.on(Events.CREATE_AND_JOIN_ROOM, (data: { gameId: string }) => {
+      let uniqueRoomName = generateRoomName()
+      while (gameRooms.get(uniqueRoomName)) {
+        uniqueRoomName = generateRoomName()
       }
+      // Create a game room and engine
+      if (data.gameId === Agar.Engine.identifier) {
+        const engine = new Agar.Engine()
+        const gameRoom = new GameRoom(engine, uniqueRoomName, app.io, 60000)
+        gameRooms.set(uniqueRoomName, gameRoom)
+      }
+
+      // Create and join the player
+      const room = gameRooms.get(uniqueRoomName)
+      if (room) {
+        if (!room.engine.hasPlayer(socket)) {
+          const { x, y } = Agar.randomPosInMap()
+          const player = new Agar.Player(generateName(), socket, x, y)
+          player.isLeaderAndReady()
+          room.engine.addPlayer(socket, player)
+          gamePlayers.set(socket.id, player)
+        }
+        socket.join(room.name)
+        room.emitStateToRoomMates()
+      }
+    })
+
+    socket.on(Events.JOIN_ROOM, (data: { roomId: string }) => {
       const room = gameRooms.get(data.roomId)
       if (room) {
         // Create a new player
@@ -61,14 +82,26 @@ app.ready((err) => {
           room.engine.addPlayer(socket, player)
           gamePlayers.set(socket.id, player)
         }
-        socket.join(data.roomId)
-        socket.emit(Events.JOINED_ROOM, room.serialize())
+        socket.join(room.name)
+        room.emitStateToRoomMates()
       }
     })
     socket.on(Events.INPUT, (data) => {
       const room = gameRooms.get(data.room.name)
       if (room) {
         room.engine.handleInput(socket, data)
+      }
+    })
+    socket.on(Events.READY, (data) => {
+      const room = gameRooms.get(data.room.name)
+      if (room) {
+        room.engine.readyPlayer(socket)
+      }
+    })
+    socket.on(Events.START, (data) => {
+      const room = gameRooms.get(data.room.name)
+      if (room) {
+        room.startSession()
       }
     })
     socket.on(Events.LEAVE_ROOM, (data) => {

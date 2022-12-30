@@ -24,7 +24,7 @@ export const Scene = ({}) => {
 
   const [{}, set] = useControls(() => ({
     Name: { value: 'default', editable: false },
-    Score: { value: player ? player.score : 0, editable: false },
+    Score: { value: 0, editable: false },
     // x: { value: 0, editable: false },
     // y: { value: 0, editable: false },
     // direction: { value: 0, editable: false },
@@ -41,7 +41,7 @@ export const Scene = ({}) => {
         // x: player.body.x,
         // y: player.body.y,
         // direction: player.body.direction,
-        // Score: player.score,
+        Score: player.score,
         // speed: player.body.speed,
         // size: player.body.size,
         Time: room.completed,

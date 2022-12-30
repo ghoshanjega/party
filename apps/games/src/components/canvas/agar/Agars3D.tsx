@@ -18,7 +18,7 @@ const Agars3D = ({ agars }: { agars: { [key: string]: Agar.AgarDto } }) => {
         position={[0, 10, 0]}
       >
         <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial roughness={0} color={'#ff5555'} />
+        <meshStandardMaterial roughness={0} color={'#5550ff'} />
         {agarsArray.map((agar, i) => (
           <Agar3D key={i} agar={agar} />
         ))}
