@@ -1,7 +1,6 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import { emit } from '@/helpers/socket'
 import { useStore } from '@/helpers/store'
-import { useGetRooms } from '@/helpers/useGetRooms'
 import {
   Agar,
   Events,
@@ -15,8 +14,6 @@ import {
   Avatar,
   Box,
   Label,
-  FormControl,
-  TextInput,
   Button,
   Dialog,
   Text,
@@ -24,6 +21,8 @@ import {
 } from '@primer/react'
 import { PersonIcon, StarFillIcon, TrophyIcon } from '@primer/octicons-react'
 import { getPlayer } from '@/components/canvas/agar/logic'
+import { getRooms } from '@/helpers/api'
+import { useQuery } from 'react-query'
 
 const Navbar = () => {
   return (
@@ -34,15 +33,6 @@ const Navbar = () => {
           <span>Party</span>
         </Header.Link>
       </Header.Item>
-      {/* <Header.Item full>Menu</Header.Item> */}
-      {/* <Header.Item mr={0}>
-        <Avatar
-          src='https://github.com/octocat.png'
-          size={20}
-          square
-          alt='@octocat'
-        />
-      </Header.Item> */}
     </div>
   )
 }
@@ -51,18 +41,28 @@ const RoomSelector = () => {
   const storeRef = useRef(useStore.getState())
   useEffect(() => useStore.subscribe((state) => (storeRef.current = state)), [])
   const store = storeRef.current
-  const rooms = useGetRooms()
+  const { status, data, error, isFetching } = useQuery({
+    queryKey: ['rooms'],
+    queryFn: async () => {
+      const res = await fetch(getRooms())
+      return res.json() as unknown as {
+        [key: string]: GameRoomDto<GameEngineDto<GamePlayerDto>, GamePlayerDto>
+      }
+    },
+    // Refetch the data every second
+    refetchInterval: 1000,
+  })
   const handleJoin = (
     room: GameRoomDto<GameEngineDto<GamePlayerDto>, GamePlayerDto>
   ) => {
     emit(store, Events.JOIN_ROOM, { roomId: room.name })
   }
-  if (rooms) {
+  if (data && data.rooms) {
     return (
       <Box p={3}>
         <Label variant='success'>Join room</Label>
         <Box display='flex'>
-          {Object.entries(rooms).map(([key, room]) => (
+          {Object.entries(data.rooms).map(([key, room]) => (
             <Box p={3} key={key}>
               <Button
                 style={{
@@ -76,7 +76,7 @@ const RoomSelector = () => {
                 <span className='badge'>{room.name}</span>
                 <br />
                 <span className='badge'>
-                  {Object.values(room.engine.players).length}
+                  {/* {Object.values(room.engine.players).length} */}
                   <PersonIcon size={16} />
                 </span>
               </Button>
@@ -316,8 +316,8 @@ function Index() {
     <React.Fragment>
       <Navbar />
       <Box p={3}>
-        <RoomSelector />
         <GameLibrary handleGameClick={handleGameClick} />
+        <RoomSelector />
       </Box>
       <JoinOrCreateGameModal
         game={selectedGame}

@@ -11,6 +11,7 @@ import { SSRProvider, ThemeProvider } from '@primer/react'
 import '@/styles/index.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { Loader } from '@react-three/drei'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
   loading: () => <Loader />,
@@ -59,17 +60,20 @@ function App({
   useEffect(() => {
     useStore.setState({ router })
   }, [router])
+  const queryClient = new QueryClient()
   return (
     <SSRProvider>
-      <ThemeProvider colorMode='dark'>
-        <Header title={pageProps.title} />
-        <Dom>
-          <Component {...pageProps} />
-        </Dom>
-        {store.room && (Component as any)?.r3f && (
-          <LCanvas>{(Component as any).r3f()}</LCanvas>
-        )}
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider colorMode='dark'>
+          <Header title={pageProps.title} />
+          <Dom>
+            <Component {...pageProps} />
+          </Dom>
+          {store.room && (Component as any)?.r3f && (
+            <LCanvas>{(Component as any).r3f()}</LCanvas>
+          )}
+        </ThemeProvider>
+      </QueryClientProvider>
     </SSRProvider>
   )
 }

@@ -15,7 +15,9 @@ export const emit = (
   data: { [key: string]: any }
 ) => {
   store.socket.emit(event, {
-    room: store.room,
+    room: {
+      name: store.room ? store.room.name : 'lobby',
+    },
     ...data,
   })
 }
