@@ -19,7 +19,12 @@ import {
   Text,
   AvatarPair,
 } from '@primer/react'
-import { PersonIcon, StarFillIcon, TrophyIcon } from '@primer/octicons-react'
+import {
+  MarkGithubIcon,
+  PersonIcon,
+  StarFillIcon,
+  TrophyIcon,
+} from '@primer/octicons-react'
 import { getPlayer } from '@/components/canvas/agar/logic'
 import { getRooms } from '@/helpers/api'
 import { useQuery } from 'react-query'
@@ -31,6 +36,15 @@ const Navbar = () => {
         <Header.Link href='#'>
           <StyledOcticon icon={StarFillIcon} size={32} sx={{ mr: 2 }} />
           <span>Party</span>
+        </Header.Link>
+      </Header.Item>
+      <Header.Item mr={0}>
+        {' '}
+        <Header.Link
+          href='https://github.com/ghoshanjega/party'
+          target={'_blank'}
+        >
+          <StyledOcticon icon={MarkGithubIcon} size={22} sx={{ mr: 2 }} />
         </Header.Link>
       </Header.Item>
     </div>
@@ -50,7 +64,7 @@ const RoomSelector = () => {
       }
     },
     // Refetch the data every second
-    refetchInterval: 1000,
+    refetchInterval: 2000,
   })
   const handleJoin = (
     room: GameRoomDto<GameEngineDto<GamePlayerDto>, GamePlayerDto>
@@ -313,7 +327,7 @@ function Index() {
   }
 
   return (
-    <React.Fragment>
+    <div className='flex flex-grow-1 flex-column'>
       <Navbar />
       <Box p={3}>
         <GameLibrary handleGameClick={handleGameClick} />
@@ -324,7 +338,7 @@ function Index() {
         isOpen={isOpen || (store.room && store.room.state === 'lobby')}
         setIsOpen={setIsOpen}
       />
-    </React.Fragment>
+    </div>
   )
 }
 
