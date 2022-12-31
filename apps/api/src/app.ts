@@ -1,6 +1,7 @@
 import fastify from 'fastify'
 import cors from '@fastify/cors'
 import socketioServer from 'fastify-socket.io'
+import { instrument } from '@socket.io/admin-ui'
 
 import { GameRoom, Agar, Events, GamePlayer, GameRoomsDto, GameEngineDto, GamePlayerDto } from 'interface'
 import { Socket } from 'socket.io'
@@ -44,6 +45,10 @@ app.get('/rooms', async (request, reply) => {
 // SOCKET
 app.ready((err) => {
   if (err) throw err
+  instrument(app.io, {
+    auth: false,
+    mode: 'development',
+  })
   app.io.on('connection', (socket: Socket) => {
     socket.on(Events.CREATE_AND_JOIN_ROOM, (data: { gameId: string }) => {
       let uniqueRoomName = generateRoomName()
