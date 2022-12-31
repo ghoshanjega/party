@@ -38,7 +38,7 @@ const Navbar = () => {
           <span>Party</span>
         </Header.Link>
       </Header.Item>
-      <Header.Item mr={0}>
+      <Header.Item>
         {' '}
         <Header.Link
           href='https://github.com/ghoshanjega/party'

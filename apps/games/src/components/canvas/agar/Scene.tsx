@@ -32,6 +32,7 @@ export const Scene = ({}) => {
     // size: { value: 0, editable: false },
     // join: button(() => joinGame(socket, 'newGuy'))
     Time: { value: 0, min: 0, max: 100, step: 1, editable: false },
+    Latency: { value: 0, editable: false },
   }))
 
   useEffect(() => {
@@ -45,9 +46,10 @@ export const Scene = ({}) => {
         // speed: player.body.speed,
         // size: player.body.size,
         Time: room.completed,
+        Latency: room.latency,
       })
     }
-  }, [player, set, room.completed])
+  }, [player, set, room])
 
   if (room.engine && Object.keys(room.engine).length !== 0 && player) {
     return (

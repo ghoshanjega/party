@@ -9,6 +9,8 @@ export interface GameRoomDto<EngineDto extends GameEngineDto<PlayerDto>, PlayerD
   engine: EngineDto
   completed: number
   state: GameRoomState
+  at: number
+  latency?: number // its computed on client side
 }
 
 export interface GameRoomsDto<EngineDto extends GameEngineDto<PlayerDto>, PlayerDto extends GamePlayerDto> {
@@ -67,6 +69,7 @@ export class GameRoom<Player extends GamePlayer> {
       engine: this.engine.serialize(),
       completed: getCompletedPercentage(this.startedAt, this.ttl),
       state: this.state,
+      at: Date.now(),
     }
   }
 }

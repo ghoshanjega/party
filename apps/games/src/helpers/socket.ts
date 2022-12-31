@@ -30,7 +30,7 @@ export const setupListners = (
   store.socket.on(
     Events.GAME_STATE,
     (state: GameRoomDto<GameEngineDto<GamePlayerDto>, GamePlayerDto>) => {
-      setState({ room: state })
+      setState({ room: { ...state, latency: Date.now() - state.at } })
     }
   )
   store.socket.on(
