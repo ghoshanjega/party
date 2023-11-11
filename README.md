@@ -101,3 +101,8 @@ fly deploy --config fly.games.toml
 fly deploy --config fly.api.toml
 
 ```
+
+## Apple UI
+
+<!-- Insert image -->
+<img src="./apps/games-apple/img/homescreen.png" alt="alt text" width="200"/>
