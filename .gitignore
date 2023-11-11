@@ -35,3 +35,5 @@ dist/
 
 # TODO: remove once stable
 *.lock
+
+*/games-apple/
