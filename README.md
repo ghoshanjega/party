@@ -102,7 +102,11 @@ fly deploy --config fly.api.toml
 
 ```
 
+## Web UI
+
+<img src="./img/web-home.jpg" alt="alt text" width="600"/>
+<img src="./img/game-spaceballs.jpg" alt="alt text" width="400"/>
+
 ## Apple UI
 
-<!-- Insert image -->
-<img src="./apps/games-apple/img/homescreen.png" alt="alt text" width="200"/>
+<img src="./img/apple-home.png" alt="alt text" width="200"/>
