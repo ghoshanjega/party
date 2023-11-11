@@ -9,7 +9,7 @@ import { Player, PlayerDto } from './Player'
 import { randomPosInMap, randomSize } from './utils'
 
 export interface EngineDto extends GameEngineDto<PlayerDto> {
-  agars?: { [key: string]: AgarDto }
+  agars: { [key: string]: AgarDto }
   lastUpdateTime: number
 }
 

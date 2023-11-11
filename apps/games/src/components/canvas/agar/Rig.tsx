@@ -63,6 +63,7 @@ function Electron({ radius = 2.75, speed = 6, ...props }) {
         color={new THREE.Color(2, 1, 10)}
         attenuation={(t) => t * t}
       >
+        {/* @ts-ignore */}
         <mesh ref={ref}>
           <pointLight distance={100} intensity={10} color={'white'} />
           <sphereGeometry args={[0.25]} />
