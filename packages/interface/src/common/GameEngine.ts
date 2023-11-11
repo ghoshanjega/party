@@ -24,7 +24,7 @@ export abstract class GameEngine<Player extends GamePlayer> {
 
   abstract handleInput(socket: Socket, data: any): void
 
-  abstract serialize(): any
+  abstract serialize(partial: Boolean): any
 
   killEngine() {
     this.active = false

@@ -1,6 +1,6 @@
 import { useStore } from '@/helpers/store'
 import { Physics } from '@react-three/cannon'
-import { Stars, Stats } from '@react-three/drei'
+import { Center, Stars, Stats, Text3D } from '@react-three/drei'
 import { Agar, GameRoomDto } from 'interface'
 import { Leva, useControls } from 'leva'
 import { useEffect, useRef } from 'react'
@@ -61,14 +61,15 @@ export const Scene = ({}) => {
             <Agars3D agars={room.engine.agars} />
             <Cells3D players={room.engine.players} />
           </Physics>
+
           <Stars
-            radius={100}
-            depth={Agar.C.MAP_SIZE / 2}
-            count={5000}
-            factor={40}
-            saturation={1}
+            radius={Agar.C.MAP_SIZE / 4}
+            depth={Agar.C.MAP_SIZE / 8}
+            count={Agar.C.MAP_SIZE * 3}
+            factor={50}
+            saturation={50}
             fade
-            speed={1}
+            speed={0.05}
           />
         </Rig>
       </>

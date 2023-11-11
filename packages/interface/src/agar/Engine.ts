@@ -9,7 +9,7 @@ import { Player, PlayerDto } from './Player'
 import { randomPosInMap, randomSize } from './utils'
 
 export interface EngineDto extends GameEngineDto<PlayerDto> {
-  agars: { [key: string]: AgarDto }
+  agars?: { [key: string]: AgarDto }
   lastUpdateTime: number
 }
 
@@ -18,6 +18,7 @@ export class Engine extends GameEngine<Player> {
   static identifier = 'agar'
   agars: Agars
   lastUpdateTime: number
+  NUM_AGARS = this.players.size * C.AGAR_COUNT_PER_PLAYER
 
   constructor() {
     super()
@@ -29,13 +30,16 @@ export class Engine extends GameEngine<Player> {
 
   initialize() {
     const agarMap: Agars = new Map()
-    for (let index = 0; index < C.AGAR_START_COUNT; index++) {
+    this.agars = agarMap
+  }
+
+  replenishAgar() {
+    for (let index = this.agars.size; index < this.NUM_AGARS; index++) {
       const id = uuidv4()
       const { x, y } = randomPosInMap()
       const size = randomSize(C.AGAR_MIN_SIZE, C.AGAR_MAX_SIZE)
-      agarMap.set(id, new Agar(id, x, y, 0, 0, size))
+      this.agars.set(id, new Agar(id, x, y, 0, 0, size))
     }
-    this.agars = agarMap
   }
 
   update() {
@@ -43,12 +47,13 @@ export class Engine extends GameEngine<Player> {
       const now = Date.now()
       const dt = (now - this.lastUpdateTime) / 1000
       this.lastUpdateTime = now
+      this.NUM_AGARS = this.players.size * C.AGAR_COUNT_PER_PLAYER
 
       for (const [agarId, agar] of this.agars) {
         for (const [playerId, player] of this.players) {
           if (agar && player.body.isWithinRadius(agar.x, agar.y)) {
             // delete this agar
-            player.body.size += agar.size
+            player.score += agar.size
             this.agars.delete(agarId)
             // create a replacement
             const id = uuidv4()
@@ -79,6 +84,7 @@ export class Engine extends GameEngine<Player> {
           player.update(dt)
         }
       }
+      this.replenishAgar()
       setTimeout(() => {
         this.update()
       }, 10)
@@ -93,10 +99,10 @@ export class Engine extends GameEngine<Player> {
     }
   }
 
-  serialize(): EngineDto {
+  serialize(partial: Boolean): EngineDto {
     return {
       players: Object.fromEntries(new Map(Array.from(this.players).map(([key, value]) => [key, value.serialize()]))),
-      agars: Object.fromEntries(this.agars),
+      agars: partial ? {} : Object.fromEntries(this.agars),
       lastUpdateTime: this.lastUpdateTime,
       location: this.location,
       identifier: Engine.identifier,

@@ -35,7 +35,7 @@ app.get('/rooms', async (request, reply) => {
       new Map(
         Array.from(gameRooms)
           .filter(([key, value]) => value.active)
-          .map(([key, value]) => [key, { name: value.name, engine: value.engine.serialize() }])
+          .map(([key, value]) => [key, { name: value.name, engine: value.engine.serialize(true) }])
       )
     ),
   }

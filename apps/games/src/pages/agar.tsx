@@ -21,17 +21,16 @@ const Page = () => {
   return (
     <>
       {/* <Instructions>
-        Collect all the trash before the other pirates. Watchout for any This is
-        a minimal starter for Nextjs + React-three-fiber and Threejs. Click on
-        the <span className='text-cyan-200'>atoms nucleus</span> to navigate to
-        the <span className='text-green-200'>/blob</span> page. OrbitControls
-        are enabled by default.
+        <span className='text-cyan-200'>120</span> to navigate to the{' '}
+        <span className='text-green-200'>/blob</span> page. OrbitControls are
+        enabled by default.
       </Instructions> */}
       <Leva
         titleBar={{
-          title: <Label variant='success'>Party</Label>,
+          title: <Label variant='success'>Party x Space Balls</Label>,
           filter: false,
         }}
+        collapsed={true}
       />
     </>
   )

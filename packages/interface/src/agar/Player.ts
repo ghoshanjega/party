@@ -24,15 +24,12 @@ export class Player extends GamePlayer {
   update(dt: number) {
     this.body.update(dt)
 
-    // Update score
-    this.score = ((Date.now() - this.createdAt) / 1000) * C.SCORE_PER_SECOND + this.body.size
-
     // Make sure the player stays in bounds
     this.body.x = Math.max(-C.MAP_SIZE / 2, Math.min(C.MAP_SIZE / 2, this.body.x))
     this.body.y = Math.max(-C.MAP_SIZE / 2, Math.min(C.MAP_SIZE / 2, this.body.y))
 
     // Make sure the player stays in size bound
-    this.body.size = Math.max(C.PLAYER_START_SIZE, Math.min(C.PLAYER_MAX_SIZE, this.body.size))
+    this.body.size = Math.max(C.PLAYER_START_SIZE, Math.min(C.PLAYER_MAX_SIZE, this.score))
   }
 
   isLeaderAndReady() {

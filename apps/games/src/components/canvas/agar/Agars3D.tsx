@@ -1,8 +1,10 @@
 import { Instances } from '@react-three/drei'
 import { Agar } from 'interface'
 import React, { Fragment, useRef } from 'react'
+import { useSpring } from '@react-spring/core'
 import { Color } from 'three'
 import Agar3D from './Agar3D'
+import Sugar3D from './Sugar3D'
 
 const Agars3D = ({ agars }: { agars: { [key: string]: Agar.AgarDto } }) => {
   const ref = useRef()
@@ -15,10 +17,9 @@ const Agars3D = ({ agars }: { agars: { [key: string]: Agar.AgarDto } }) => {
         ref={ref}
         castShadow
         receiveShadow
-        position={[0, 10, 0]}
+        position={[0, 0, 0]}
       >
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial roughness={0} color={'#5550ff'} />
+        <Sugar3D />
         {agarsArray.map((agar, i) => (
           <Agar3D key={i} agar={agar} />
         ))}
