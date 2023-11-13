@@ -8,9 +8,6 @@ import { getPlayer } from './logic'
 import {
   Center,
   Edges,
-  GradientTexture,
-  Line,
-  OrthographicCamera,
   PerspectiveCamera,
   Text3D,
   Trail,
