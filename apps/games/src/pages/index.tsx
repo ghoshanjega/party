@@ -197,7 +197,10 @@ const JoinOrCreateGameModal = ({
     <Dialog
       isOpen={isOpen}
       // returnFocusRef={returnFocusRef}
-      onDismiss={() => setIsOpen(false)}
+      onDismiss={() => {
+        console.log("yoyo")
+        setIsOpen(isOpen => !isOpen)}
+      }
       aria-labelledby='label'
     >
       <Dialog.Header color='fg.onEmphasis'>

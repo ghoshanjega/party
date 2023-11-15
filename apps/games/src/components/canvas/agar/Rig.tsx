@@ -11,7 +11,6 @@ import {
   PerspectiveCamera,
   Text3D,
   Trail,
-  useHelper,
 } from '@react-three/drei'
 import { SpotLightHelper } from 'three'
 import Sugar3D from './Sugar3D'
@@ -35,7 +34,7 @@ function Lights({ player }: { player: Agar.Player }) {
   })
   return (
     <group>
-      <ambientLight intensity={0.1} color={'#ffffff'} />
+      <ambientLight intensity={0.3} color={'#ffffff'} />
     </group>
   )
 }
@@ -130,14 +129,14 @@ export const Rig = ({ children }: { children: ReactNode }) => {
             <meshStandardMaterial color='white' />
             <Edges />
           </Text3D>
-          <Center position={[-80, 20, 0]}>
+          {/* <Center position={[-80, 20, 0]}>
             <mesh scale={20}>
               <Sugar3D />
             </mesh>
             <Center>
               <Electron position={[0, 0, 0]} speed={3} scale={20} />
             </Center>
-          </Center>
+          </Center> */}
         </Center>
       </PerspectiveCamera>
       <Lights player={player} />

@@ -63,8 +63,8 @@ const Cell3D = ({ player }: { player: Agar.Player }): JSX.Element => {
   return (
     <>
       <group ref={group}>
-        <DomeSpaceShip color={player.body.color} />
-        {/* <VaderSpaceShip /> */}
+        {/* <DomeSpaceShip color={player.body.color} /> */}
+        <VaderSpaceShip color={player.body.color}/>
 
         <pointLight
           ref={headlight}

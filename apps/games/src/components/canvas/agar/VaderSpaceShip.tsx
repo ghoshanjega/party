@@ -1,7 +1,7 @@
 import { useGLTF } from '@react-three/drei'
 import { forwardRef, useLayoutEffect } from 'react'
 
-const VaderSpaceShip = () => {
+const VaderSpaceShip = ({ color }: { color: string }) => {
   const { nodes, materials } = useGLTF(
     'https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/low-poly-spaceship/model.gltf'
   )
@@ -31,7 +31,7 @@ const VaderSpaceShip = () => {
         // @ts-ignore
         geometry={nodes.Cube005_1.geometry}
         material={materials.Mat1}
-        material-color='black'
+        material-color='grey'
       />
       <mesh
         castShadow
@@ -40,7 +40,7 @@ const VaderSpaceShip = () => {
         geometry={nodes.Cube005_2.geometry}
         material={materials.Mat2}
         material-envMapIntensity={0.2}
-        material-color='black'
+        material-color={color}
       />
       <mesh
         castShadow
