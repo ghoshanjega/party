@@ -17,6 +17,8 @@
 		AF5D016A2AFF7AB300F1BEBF /* games_appleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5D01692AFF7AB300F1BEBF /* games_appleUITestsLaunchTests.swift */; };
 		AF5D01782AFFB90800F1BEBF /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = AF5D01772AFFB90800F1BEBF /* SocketIO */; };
 		AF5D017A2AFFE69900F1BEBF /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5D01792AFFE69900F1BEBF /* ViewModel.swift */; };
+		AFD24ED52B2DF4F400819EA6 /* SocketStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD24ED42B2DF4F400819EA6 /* SocketStuff.swift */; };
+		AFD24ED72B2E02DF00819EA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD24ED62B2E02DF00819EA6 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,8 @@
 		AF5D01672AFF7AB300F1BEBF /* games_appleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = games_appleUITests.swift; sourceTree = "<group>"; };
 		AF5D01692AFF7AB300F1BEBF /* games_appleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = games_appleUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AF5D01792AFFE69900F1BEBF /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		AFD24ED42B2DF4F400819EA6 /* SocketStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketStuff.swift; sourceTree = "<group>"; };
+		AFD24ED62B2E02DF00819EA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +112,8 @@
 				AF5D01512AFF7AB300F1BEBF /* games_apple.entitlements */,
 				AF5D01522AFF7AB300F1BEBF /* Preview Content */,
 				AF5D01792AFFE69900F1BEBF /* ViewModel.swift */,
+				AFD24ED42B2DF4F400819EA6 /* SocketStuff.swift */,
+				AFD24ED62B2E02DF00819EA6 /* AppDelegate.swift */,
 			);
 			path = "games-apple";
 			sourceTree = "<group>";
@@ -273,10 +279,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFD24ED72B2E02DF00819EA6 /* AppDelegate.swift in Sources */,
 				AF5D014C2AFF7AB100F1BEBF /* ContentView.swift in Sources */,
 				AF5D014E2AFF7AB100F1BEBF /* Item.swift in Sources */,
 				AF5D017A2AFFE69900F1BEBF /* ViewModel.swift in Sources */,
 				AF5D014A2AFF7AB100F1BEBF /* games_appleApp.swift in Sources */,
+				AFD24ED52B2DF4F400819EA6 /* SocketStuff.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

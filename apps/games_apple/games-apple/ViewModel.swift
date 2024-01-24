@@ -57,4 +57,39 @@ class ViewModel: ObservableObject {
     }
     task.resume()
   }
+
+  // Use shared socket to emit event "create_and_join_room"
+  func createRoom(name: String) {
+    // emit socket event name "create_and_join_room" with data { "gameId": "agar" }
+
+    SocketStuff.shared.emitEvent(
+      eventName: "create_and_join_room",
+      withData: ["""
+        {
+         "room": "lobby",
+         "gameId": "agar"
+        }
+        """])
+  }
+
+  // Use shared socket to emit event "join_room"
+  func joinRoom(roomId: String) {
+    SocketStuff.shared.emitEvent(eventName: "join_room", withData: [roomId])
+  }
+
+  // Use shared socket to emit event "leave_room"
+  func leaveRoom(roomId: String) {
+    SocketStuff.shared.emitEvent(eventName: "leave_room", withData: [roomId])
+  }
+
+  // Use shared socket to emit event "ready"
+  func ready(roomId: String) {
+    SocketStuff.shared.emitEvent(eventName: "ready", withData: [roomId])
+  }
+
+  // Use shared socket to emit event "unready"
+  func unready(roomId: String) {
+    SocketStuff.shared.emitEvent(eventName: "unready", withData: [roomId])
+  }
+
 }

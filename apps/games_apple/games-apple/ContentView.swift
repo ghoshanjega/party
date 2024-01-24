@@ -8,8 +8,6 @@
 import SwiftData
 import SwiftUI
 
-
-
 struct ContentView: View {
   @Environment(\.modelContext) private var modelContext
   @Query private var items: [Item]
@@ -127,27 +125,55 @@ struct PopoverView: View {
   // State variable
   var popoverType: PopoverType
   @State var showingPopover = false
+  @State var roomName: String = ""
+  @ObservedObject var viewModel = ViewModel()
   var body: some View {
-      VStack() {
-          InstructionsView()
-          Spacer()
-          if popoverType == .newGame {
-            VStack {
-              Text("Create new room?")
-              Button("New Game") {
-                showingPopover = false
+    VStack {
+      
+      if popoverType == .newGame {
+        VStack {
+            if showingPopover == true {
+              // Show input box to get the room name in the center of the V Stack with 2 buttons below it "Start" and "Cancel"
+              TextField("Enter room name", text: $roomName).textFieldStyle(.roundedBorder).padding()
+              HStack {
+                Spacer()
+                Button("Create") {
+                  // Create a new room
+                  viewModel.createRoom(name: roomName)
+                  showingPopover = false
+                }
+                Spacer()
+                Button("Cancel") {
+                  showingPopover = false
+                }
+                Spacer()
               }
-            }
-          } else {
-            VStack {
-              Text("Join Room")
-              Button("Ready") {
+              
 
-              }
+              
             }
+            else {
+                // Instructions
+                InstructionsView()
+                Spacer()
+                Button("Start new game") {
+                  showingPopover = true
+                }
+            }
+          //              Text("Create new room?")
+          
+          
+
+        }
+      } else {
+        VStack {
+          Text("Join Room")
+          Button("Ready") {
+
           }
-      }.padding()
-    
+        }
+      }
+    }.padding()
 
   }
 }

@@ -51,6 +51,10 @@ app.ready((err) => {
     mode: 'development',
   })
   app.io.on('connection', (socket: Socket) => {
+    socket.on('*', function (event, data) {
+      console.log(event)
+      console.log(data)
+    })
     socket.on(Events.CREATE_AND_JOIN_ROOM, (data: { gameId: string }) => {
       let uniqueRoomName = generateRoomName()
       while (gameRooms.get(uniqueRoomName)) {
