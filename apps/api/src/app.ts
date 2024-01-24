@@ -10,11 +10,11 @@ import { generateRoomName } from './utils/room.js'
 
 const app = fastify({ logger: false })
 await app.register(cors, {
-  origin: ['http://localhost:3005', 'https://party-games.fly.dev'],
+  origin: ['http://localhost:3005', 'https://party-games.fly.dev', 'https://party-games.ghoshan.dev'],
 })
 app.register(socketioServer, {
   cors: {
-    origin: ['http://localhost:3005', 'https://party-games.fly.dev'],
+    origin: ['http://localhost:3005', 'https://party-games.fly.dev', 'https://party-games.ghoshan.dev'],
   },
   transports: ['websocket'], // No Http polling as it is high bandwidth and slow
   logLevel: 'debug',
